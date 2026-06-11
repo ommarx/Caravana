@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Caravana — The Intelligent Way to Own</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Instrument+Sans:wght@300;400;500;600&family=Barlow+Condensed:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════════════════
+   CARAVANA  ·  ELITE  ·  2025
+   Fonts: Cormorant (display) + Instrument Sans (body)
+   Palette: Obsidian · Platinum · Champagne
+══════════════════════════════════════════════════ */
+:root {
+  --void:     #040407;
+  --abyss:    #07070D;
+  --deep:     #0B0B14;
+  --carbon:   #11111C;
+  --iron:     #181826;
+  --rim:      #222234;
+  --border:   rgba(255,255,255,.06);
+  --border2:  rgba(255,255,255,.035);
+  --muted:    #424258;
+  --dim:      #6868888;
+  --body:     #8A8AA8;
+  --silver:   #B4B4CC;
+  --pearl:    #D8D8E8;
+  --cream:    #EEEAE2;
+  --white:    #F6F4F0;
+  --gold:     #C4A464;
+  --gold2:    #DEC080;
+  --gold3:    #9E7E44;
+  --goldGlow: rgba(196,164,100,.15);
+  --serif: 'Cormorant', 'Georgia', serif;
+  --sans:  'Instrument Sans', system-ui, sans-serif;
+  --cond:  'Barlow Condensed', sans-serif;
+  --t1: cubic-bezier(.16,1,.3,1);
+  --t2: cubic-bezier(.4,0,.2,1);
+  --t3: cubic-bezier(.87,0,.13,1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+body { background: var(--void); color: var(--body); font-family: var(--sans); font-weight: 300; overflow-x: hidden; cursor: none; }
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--gold3); }
+::selection { background: var(--gold); color: var(--void); }
+a { text-decoration: none; color: inherit; cursor: none; }
+button { cursor: none; border: none; background: none; font-family: inherit; }
+ul { list-style: none; }
+/* Grain */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 9000; pointer-events: none; opacity: .55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");
+}
+
+/* ── Shared ── */
+.container { max-width: 1320px; margin: 0 auto; padding: 0 60px; }
+.label {
+  font-family: var(--cond); font-size: 10px; font-weight: 300;
+  letter-spacing: .52em; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 14px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--gold3); display: block; }
+.h1 { font-family: var(--serif); font-size: clamp(52px,7.5vw,110px); font-weight: 300; line-height: .92; color: var(--white); letter-spacing: -.015em; }
+.h1 em { font-style: italic; color: var(--gold); }
+.h1 .outline { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.14); }
+.h2 { font-family: var(--serif); font-size: clamp(40px,5vw,72px); font-weight: 300; line-height: 1.02; color: var(--white); }
+.h2 em { font-style: italic; color: var(--gold); }
+/* Scroll reveal */
+[data-r] { opacity: 0; transition: opacity 1s var(--t2), transform 1s var(--t2); }
+[data-r="up"]    { transform: translateY(52px); }
+[data-r="left"]  { transform: translateX(-52px); }
+[data-r="right"] { transform: translateX(52px); }
+[data-r="fade"]  { transform: none; }
+[data-r="scale"] { transform: scale(.94); }
+[data-r].in { opacity: 1; transform: none; }
+[data-d="1"]{transition-delay:.1s;}[data-d="2"]{transition-delay:.2s;}
+[data-d="3"]{transition-delay:.3s;}[data-d="4"]{transition-delay:.4s;}[data-d="5"]{transition-delay:.5s;}
+
+/* ──────────────────────────────────
+   SCROLL PROGRESS
+────────────────────────────────── */
+#prog { position: fixed; top: 0; left: 0; height: 1px; z-index: 8000; width: 0%;
+  background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold2));
+  transition: width .06s linear; }
+
+/* ──────────────────────────────────
+   CURSOR
+────────────────────────────────── */
+#cdot { position: fixed; width: 6px; height: 6px; background: var(--gold); border-radius: 50%;
+  z-index: 7999; pointer-events: none; transform: translate(-50%,-50%); }
+#cring { position: fixed; width: 38px; height: 38px; border: 1px solid rgba(196,164,100,.4); border-radius: 50%;
+  z-index: 7998; pointer-events: none; transform: translate(-50%,-50%);
+  transition: width .45s var(--t1), height .45s var(--t1), border-color .3s, background .3s; }
+body.ch #cring { width: 68px; height: 68px; border-color: var(--gold); background: var(--goldGlow); }
+body.cl #cring { width: 88px; height: 88px; border-color: var(--gold2); background: rgba(196,164,100,.08); }
+
+/* ──────────────────────────────────
+   PRELOADER
+────────────────────────────────── */
+#pre {
+  position: fixed; inset: 0; z-index: 9500; background: var(--void);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity .9s var(--t2), visibility .9s;
+}
+#pre.bye { opacity: 0; visibility: hidden; pointer-events: none; }
+.pre-logo {
+  font-family: var(--serif); font-size: clamp(36px,4vw,52px); font-weight: 300;
+  letter-spacing: .36em; text-transform: uppercase; color: var(--white);
+  opacity: 0; animation: pFade .9s .4s var(--t1) forwards;
+}
+.pre-logo em { font-style: italic; color: var(--gold); font-weight: 400; }
+.pre-sub {
+  font-family: var(--cond); font-size: 9px; font-weight: 200;
+  letter-spacing: .6em; text-transform: uppercase; color: var(--muted);
+  margin-top: 14px; opacity: 0; animation: pFade .7s .85s var(--t1) forwards;
+}
+.pre-track {
+  width: 220px; height: 1px; background: var(--rim); margin-top: 60px;
+  position: relative; overflow: hidden;
+  opacity: 0; animation: pFade .5s 1.05s forwards;
+}
+.pre-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--gold3), var(--gold2));
+  box-shadow: 0 0 10px rgba(196,164,100,.5); transition: width .05s linear; }
+.pre-pct { font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .42em;
+  color: var(--muted); margin-top: 16px; opacity: 0; animation: pFade .5s 1.05s forwards; }
+@keyframes pFade { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
+
+/* ──────────────────────────────────
+   NAV
+────────────────────────────────── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 700;
+  height: 74px; padding: 0 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid transparent;
+  transition: background .55s var(--t2), border-color .55s, backdrop-filter .55s;
+}
+#nav.on { background: rgba(4,4,7,.9); backdrop-filter: blur(28px) saturate(180%); border-color: var(--border); }
+.n-logo { font-family: var(--serif); font-size: 18px; font-weight: 300; letter-spacing: .32em; text-transform: uppercase; color: var(--white); transition: opacity .3s; }
+.n-logo em { font-style: italic; color: var(--gold); font-weight: 400; }
+.n-logo:hover { opacity: .72; }
+.n-links { display: flex; gap: 42px; }
+.n-links a { font-family: var(--cond); font-size: 11px; font-weight: 300; letter-spacing: .22em; text-transform: uppercase; color: var(--body); position: relative; padding-bottom: 4px; transition: color .3s; }
+.n-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width .4s var(--t2); }
+.n-links a:hover, .n-links a.on { color: var(--cream); }
+.n-links a:hover::after, .n-links a.on::after { width: 100%; }
+.n-right { display: flex; align-items: center; gap: 16px; }
+.nbtn {
+  font-family: var(--cond); font-size: 10px; font-weight: 400; letter-spacing: .28em;
+  text-transform: uppercase; padding: 11px 34px;
+  position: relative; overflow: hidden; transition: box-shadow .4s, transform .3s var(--t1), color .3s, border-color .3s;
+}
+.nbtn.ghost { border: 1px solid rgba(255,255,255,.12); color: var(--silver); }
+.nbtn.ghost:hover { border-color: var(--silver); color: var(--white); }
+.nbtn.solid { border: 1px solid var(--gold); color: var(--void); background: var(--gold); }
+.nbtn.solid::before { content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+  transform: translateX(-200%); transition: transform 0s; }
+.nbtn.solid:hover::before { transform: translateX(200%); transition: transform .55s var(--t2); }
+.nbtn.solid:hover { box-shadow: 0 12px 40px rgba(196,164,100,.38); transform: translateY(-2px); }
+/* Ham */
+.n-ham { display: none; flex-direction: column; gap: 5px; padding: 8px 0; }
+.n-ham span { display: block; height: 1px; background: var(--silver); transition: .4s var(--t2); }
+.n-ham span:nth-child(1){width:24px;} .n-ham span:nth-child(2){width:15px;} .n-ham span:nth-child(3){width:20px;}
+.n-ham.x span:nth-child(1){width:22px;transform:translateY(6px) rotate(45deg);}
+.n-ham.x span:nth-child(2){opacity:0;} .n-ham.x span:nth-child(3){width:22px;transform:translateY(-6px) rotate(-45deg);}
+/* Mobile overlay */
+#mob { position: fixed; inset: 0; z-index: 650; background: rgba(4,4,7,.97); backdrop-filter: blur(24px);
+  display: flex; flex-direction: column; justify-content: center; padding: 0 60px; gap: 4px;
+  transform: translateX(100%); transition: transform .65s var(--t1); }
+#mob.open { transform: translateX(0); }
+.mob-a { font-family: var(--serif); font-size: clamp(30px,5vw,50px); font-weight: 300;
+  color: var(--silver); padding: 14px 0; border-bottom: 1px solid var(--border);
+  display: block; transition: color .25s, padding-left .4s var(--t1); }
+.mob-a:hover { color: var(--gold); padding-left: 16px; }
+.mob-a:last-child { border-bottom: none; }
+.mob-a em { font-style: italic; }
+
+/* ──────────────────────────────────
+   HERO  (full video)
+────────────────────────────────── */
+.hero { height: 100vh; min-height: 700px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+/* Video layer */
+.hero-video-wrap { position: absolute; inset: 0; }
+.hero-video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Dark cinematic overlay */
+.hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, rgba(4,4,7,.88) 0%, rgba(4,4,7,.6) 45%, rgba(4,4,7,.3) 100%),
+    linear-gradient(to top, rgba(4,4,7,.95) 0%, rgba(4,4,7,.4) 35%, transparent 65%);
+}
+/* Color grade */
+.hero-grade { position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(196,164,100,.04) 0%, transparent 70%);
+}
+/* Content */
+.hero-content { position: relative; z-index: 10; padding: 0 60px 88px; display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: flex-end; }
+.h-eyebrow { opacity: 0; animation: hUp .7s .8s var(--t1) forwards; margin-bottom: 32px; }
+.h-title { opacity: 0; animation: hUp .9s 1s var(--t1) forwards; }
+.h-body { font-size: 15px; line-height: 1.88; color: var(--body); max-width: 520px; margin-top: 32px;
+  opacity: 0; animation: hUp .8s 1.3s var(--t1) forwards; }
+.h-body strong { color: var(--silver); font-weight: 400; }
+.h-ctas { display: flex; gap: 16px; align-items: center; margin-top: 52px;
+  opacity: 0; animation: hUp .8s 1.5s var(--t1) forwards; }
+.btn-fill {
+  font-family: var(--cond); font-size: 11px; font-weight: 400; letter-spacing: .26em; text-transform: uppercase;
+  padding: 17px 52px; background: var(--gold); color: var(--void);
+  position: relative; overflow: hidden; transition: box-shadow .4s, transform .35s var(--t1);
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.btn-fill::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent); transform: translateX(-200%); }
+.btn-fill:hover::before { transform: translateX(200%); transition: transform .55s var(--t2); }
+.btn-fill:hover { box-shadow: 0 14px 48px rgba(196,164,100,.42); transform: translateY(-3px); }
+.btn-line { font-family: var(--cond); font-size: 11px; font-weight: 300; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--silver); display: inline-flex; align-items: center; gap: 14px;
+  border: none; background: none; transition: color .3s; padding: 4px 0; }
+.btn-line:hover { color: var(--white); }
+.btn-arr { width: 40px; height: 1px; background: currentColor; position: relative; transition: width .4s var(--t1); }
+.btn-arr::after { content: ''; position: absolute; right: 0; top: -3px; border: 3px solid transparent; border-left: 5px solid currentColor; }
+.btn-line:hover .btn-arr { width: 56px; }
+/* Right stats panel */
+.h-panel {
+  background: rgba(255,255,255,.025); border: 1px solid var(--border);
+  backdrop-filter: blur(16px) saturate(150%);
+  padding: 36px 32px;
+  opacity: 0; animation: hUp .9s 1.8s var(--t1) forwards;
+  position: relative;
+}
+.h-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); }
+.hp-title { font-family: var(--cond); font-size: 9px; font-weight: 200; letter-spacing: .5em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+.hp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.hp-stat {}
+.hp-val { font-family: var(--serif); font-size: 38px; font-weight: 300; color: var(--white); line-height: 1; }
+.hp-val em { font-style: italic; color: var(--gold); font-size: .78em; }
+.hp-key { font-family: var(--cond); font-size: 9px; font-weight: 200; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+.hp-div { grid-column: 1/-1; height: 1px; background: var(--border); }
+.hp-review { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.hp-stars { color: var(--gold); font-size: 11px; letter-spacing: 3px; }
+.hp-rtxt { font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .12em; color: var(--body); }
+.hp-rtxt strong { color: var(--pearl); font-weight: 400; }
+/* Scroll cue */
+.hero-scroll { position: absolute; bottom: 36px; left: 60px; z-index: 10; display: flex; align-items: center; gap: 12px; opacity: 0; animation: hUp .6s 2.3s var(--t1) forwards; }
+.hs-mouse { width: 22px; height: 36px; border: 1px solid rgba(196,164,100,.35); border-radius: 11px; display: flex; justify-content: center; padding-top: 7px; }
+.hs-wheel { width: 1.5px; height: 7px; background: var(--gold); border-radius: 1px; animation: wheel 2s ease-in-out infinite; }
+@keyframes wheel { 0%{transform:translateY(0);opacity:1;} 100%{transform:translateY(10px);opacity:0;} }
+.hs-txt { font-family: var(--cond); font-size: 9px; font-weight: 200; letter-spacing: .5em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-lr; transform: rotate(180deg); }
+@keyframes hUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+
+/* ──────────────────────────────────
+   MARQUEE
+────────────────────────────────── */
+.marquee { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--abyss); padding: 20px 0; overflow: hidden; }
+.mq-t { display: flex; white-space: nowrap; animation: mqs 28s linear infinite; }
+.mq-t:hover { animation-play-state: paused; }
+.mq-i { font-family: var(--serif); font-size: 17px; font-weight: 300; font-style: italic; color: var(--muted); padding: 0 56px; flex-shrink: 0; letter-spacing: .03em; transition: color .3s; }
+.mq-i:hover { color: var(--gold); }
+.mq-d { color: var(--rim); font-size: 6px; flex-shrink: 0; vertical-align: middle; padding: 0 4px; }
+@keyframes mqs { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+/* ──────────────────────────────────
+   MANIFESTO
+────────────────────────────────── */
+.manifesto { padding: 160px 0; background: var(--abyss); position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+.manifesto::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 55% at 50% 50%, rgba(196,164,100,.04) 0%, transparent 70%); pointer-events: none; }
+.mf-q { font-family: var(--serif); font-size: clamp(22px,3vw,42px); font-weight: 300; line-height: 1.52; color: var(--silver); letter-spacing: .01em; max-width: 880px; margin: 0 auto; text-align: center; }
+.mf-q em { font-style: italic; color: var(--gold); }
+.mf-rule { display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 52px; }
+.mf-line { flex: 1; max-width: 80px; height: 1px; background: var(--rim); }
+.mf-txt { font-family: var(--cond); font-size: 9px; font-weight: 200; letter-spacing: .52em; text-transform: uppercase; color: var(--muted); }
+
+/* ──────────────────────────────────
+   SERVICES  (Porsche bento, no emojis)
+────────────────────────────────── */
+.services { padding: 140px 0; background: var(--void); }
+.srv-hd { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: flex-end; margin-bottom: 80px; }
+.srv-hd p { font-size: 15px; line-height: 1.9; color: var(--body); }
+.srv-grid { display: grid; grid-template-columns: repeat(12,1fr); gap: 2px; }
+.sc { background: var(--carbon); padding: 56px 52px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; min-height: 380px; transition: background .5s var(--t2), transform .5s var(--t1); }
+.sc:hover { background: var(--iron); transform: translateY(-4px); }
+.sc-a{grid-column:1/8;} .sc-b{grid-column:8/13;} .sc-c{grid-column:1/5;} .sc-d{grid-column:5/9;} .sc-e{grid-column:9/13;}
+.sc::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold3), var(--gold)); transform: scaleY(0); transform-origin: bottom; transition: transform .55s var(--t1); }
+.sc:hover::before { transform: scaleY(1); }
+.sc::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); opacity: 0; transition: opacity .5s; }
+.sc:hover::after { opacity: .55; }
+.sc-n { position: absolute; top: 24px; right: 36px; font-family: var(--serif); font-size: 110px; font-style: italic; font-weight: 300; color: rgba(255,255,255,.025); line-height: 1; user-select: none; }
+/* SVG icon */
+.sc-ico { position: absolute; top: 48px; left: 52px; width: 32px; height: 32px; color: var(--gold3); opacity: .55; transition: opacity .35s, transform .4s var(--t1); }
+.sc:hover .sc-ico { opacity: .9; transform: scale(1.08); }
+.sc-tag { font-family: var(--cond); font-size: 9px; font-weight: 200; letter-spacing: .5em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.sc-name { font-family: var(--serif); font-size: clamp(24px,2.6vw,34px); font-weight: 300; color: var(--white); line-height: 1.08; margin-bottom: 16px; }
+.sc-name em { font-style: italic; }
+.sc-desc { font-size: 13.5px; line-height: 1.82; color: var(--body); margin-bottom: 28px; }
+.sc-lnk { font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .32em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: 10px; transition: gap .4s var(--t1), color .3s; }
+.sc-lnk::after { content: '→'; font-size: 12px; }
+.sc:hover .sc-lnk { gap: 18px; color: var(--gold2); }
+
+/* ──────────────────────────────────
+   VIDEO SHOWCASE
+────────────────────────────────── */
+.cinema { padding: 0; background: var(--void); }
+.cinema-header { padding: 100px 60px 60px; display: flex; justify-content: space-between; align-items: flex-end; }
+.cinema-header p { font-size: 15px; line-height: 1.88; color: var(--body); max-width: 360px; }
+/* Three video cards side by side */
+.cinema-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 2px; }
+.cv-card { position: relative; overflow: hidden; background: var(--carbon); cursor: none; }
+.cv-card:hover { z-index: 2; }
+/* 16:9 ratio */
+.cv-card::before { content: ''; display: block; padding-top: 62%; }
+.cv-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--t2); }
+.cv-card:hover .cv-video { transform: scale(1.04); }
+.cv-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(4,4,7,.88) 0%, rgba(4,4,7,.3) 50%, transparent 100%); }
+.cv-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 36px; }
+.cv-label { font-family: var(--cond); font-size: 9px; font-weight: 200; letter-spacing: .45em; text-transform: uppercase; color: var(--gold3); margin-bottom: 8px; }
+.cv-title { font-family: var(--serif); font-size: clamp(18px,2vw,26px); font-weight: 300; color: var(--white); }
+/* Play icon */
+.cv-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); width: 56px; height: 56px; border: 1px solid rgba(196,164,100,.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 20px; transition: transform .4s var(--t1), background .3s; }
+.cv-card:hover .cv-play { transform: translate(-50%,-50%) scale(1); background: rgba(196,164,100,.1); }
+
+/* ──────────────────────────────────
+   PROCESS
+────────────────────────────────── */
+.process { padding: 140px 0; background: var(--abyss); position: relative; overflow: hidden; }
+.process::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--void) 0%, transparent 12%, transparent 88%, var(--void) 100%); pointer-events: none; z-index: 1; }
+.process::after { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: repeating-linear-gradient(90deg, rgba(196,164,100,.02) 0, rgba(196,164,100,.02) 1px, transparent 1px, transparent 320px); }
+.proc-in { position: relative; z-index: 2; }
+.proc-hd { margin-bottom: 80px; }
+.proc-steps { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--border); position: relative; }
+.proc-steps::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold3)); opacity: .4; }
+.ps { padding: 68px 52px 68px 0; border-right: 1px solid var(--border); position: relative; transition: background .4s; }
+.ps:nth-child(2) { padding: 68px 52px; } .ps:last-child { border-right: none; padding: 68px 0 68px 52px; }
+.ps:hover { background: rgba(196,164,100,.02); }
+.ps-dot { position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 14px var(--gold); opacity: 0; transition: opacity .4s; }
+.ps:hover .ps-dot { opacity: 1; } .ps:nth-child(2) .ps-dot, .ps:last-child .ps-dot { left: 52px; }
+.ps-num { font-family: var(--serif); font-size: 88px; font-style: italic; font-weight: 300; color: rgba(255,255,255,.04); line-height: 1; margin-bottom: 28px; }
+.ps-rule { width: 28px; height: 1px; background: var(--gold3); margin-bottom: 28px; transition: width .5s var(--t1), background .3s; }
+.ps:hover .ps-rule { width: 52px; background: var(--gold); }
+.ps-title { font-family: var(--serif); font-size: clamp(22px,2.2vw,30px); font-weight: 300; color: var(--white); margin-bottom: 18px; line-height: 1.12; }
+.ps-title em { font-style: italic; color: var(--gold); }
+.ps-body { font-size: 14px; line-height: 1.88; color: var(--body); }
+
+/* ──────────────────────────────────
+   STATS
+────────────────────────────────── */
+.stats { background: var(--void); border-top: 1px solid var(--border); }
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); }
+.nb { padding: 80px 60px; border-right: 1px solid var(--border); position: relative; overflow: hidden; transition: background .4s; }
+.nb:last-child { border-right: none; }
+.nb:hover { background: rgba(196,164,100,.025); }
+.nb::after { content: ''; position: absolute; bottom: 0; left: 60px; width: 0; height: 1px; background: var(--gold); transition: width .55s var(--t1); }
+.nb:hover::after { width: 48px; }
+.nb-val { font-family: var(--serif); font-size: clamp(52px,5.5vw,76px); font-weight: 300; color: var(--white); line-height: 1; letter-spacing: -.02em; }
+.nb-val em { font-style: italic; color: var(--gold); font-size: .75em; }
+.nb-lbl { margin-top: 14px; font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .42em; text-transform: uppercase; color: var(--muted); }
+.nb-sub { font-size: 13px; color: var(--body); margin-top: 6px; line-height: 1.6; }
+
+/* ──────────────────────────────────
+   STORIES
+────────────────────────────────── */
+.stories { padding: 140px 0; background: var(--abyss); overflow: hidden; }
+.stories-hd { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 80px; }
+.sl-nav { display: flex; align-items: center; gap: 14px; }
+.sl-btn { width: 48px; height: 48px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--silver); font-size: 16px; transition: border-color .35s, color .35s, background .35s; }
+.sl-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(196,164,100,.06); }
+.sl-dots { display: flex; gap: 6px; align-items: center; padding: 0 8px; }
+.sl-dot { width: 20px; height: 1px; background: var(--muted); transition: width .45s var(--t1), background .35s; }
+.sl-dot.on { width: 40px; background: var(--gold); }
+.sl-stage { overflow: hidden; }
+.sl-track { display: flex; transition: transform .8s var(--t1); }
+.sl-slide { min-width: 100%; padding: 0 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 88px; align-items: center; }
+.sl-oq { font-family: var(--serif); font-size: 140px; color: rgba(196,164,100,.08); line-height: .8; margin-bottom: -16px; display: block; font-style: italic; user-select: none; }
+.sl-stars { color: var(--gold); font-size: 12px; letter-spacing: 3px; margin-bottom: 22px; }
+.sl-q { font-family: var(--serif); font-size: clamp(20px,2.2vw,30px); font-weight: 300; font-style: italic; line-height: 1.58; color: var(--cream); }
+.sl-meta { margin-top: 40px; }
+.sl-rule { width: 28px; height: 1px; background: var(--gold3); margin-bottom: 18px; }
+.sl-name { font-family: var(--cond); font-size: 12px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: var(--white); }
+.sl-role { font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+.sl-num { font-family: var(--serif); font-size: clamp(72px,9vw,118px); font-weight: 300; color: var(--white); line-height: 1; letter-spacing: -.02em; }
+.sl-num em { font-style: italic; color: var(--gold); }
+.sl-num-lbl { font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .42em; text-transform: uppercase; color: var(--muted); margin-top: 12px; }
+.sl-bars { display: flex; flex-direction: column; gap: 10px; margin-top: 36px; }
+.sl-br { display: flex; align-items: center; gap: 14px; }
+.sl-bk { font-family: var(--cond); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); min-width: 100px; }
+.sl-bt { flex: 1; height: 1px; background: var(--rim); position: relative; overflow: hidden; }
+.sl-bf { height: 100%; background: linear-gradient(90deg, var(--gold3), var(--gold)); transform: scaleX(0); transform-origin: left; transition: transform 1.4s var(--t1) .3s; }
+.sl-bf.go { transform: scaleX(1); }
+.sl-bv { font-family: var(--cond); font-size: 9px; color: var(--gold); min-width: 36px; text-align: right; }
+
+/* ──────────────────────────────────
+   COMPARE
+────────────────────────────────── */
+.compare { padding: 140px 0; background: var(--void); }
+.cmp-hd { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: flex-end; margin-bottom: 68px; }
+.cmp-hd p { font-size: 15px; line-height: 1.88; color: var(--body); max-width: 440px; }
+.cmp-cap { display: grid; grid-template-columns: 2.2fr repeat(3,1fr); margin-bottom: -1px; }
+.cmp-cap div:nth-child(2) { background: var(--gold); color: var(--void); font-family: var(--cond); font-size: 9px; font-weight: 500; letter-spacing: .26em; text-align: center; padding: 7px 0; text-transform: uppercase; }
+.cmp-t { border: 1px solid var(--border); }
+.cr { display: grid; grid-template-columns: 2.2fr repeat(3,1fr); border-bottom: 1px solid var(--border); transition: background .25s; }
+.cr:last-child { border-bottom: none; } .cr.hd { background: var(--carbon); } .cr:not(.hd):hover { background: rgba(196,164,100,.02); }
+.cc { padding: 20px 28px; border-right: 1px solid var(--border2); display: flex; align-items: center; font-size: 13.5px; color: var(--body); }
+.cc:last-child { border-right: none; } .cc.feat { color: var(--silver); }
+.cc.cv { background: rgba(196,164,100,.05); color: var(--gold); justify-content: center; }
+.hd .cc { font-family: var(--cond); font-size: 10px; font-weight: 300; letter-spacing: .22em; text-transform: uppercase; }
+.hd .cv { color: var(--gold); }
+.tick { color: var(--gold); font-size: 16px; } .cross { color: var(--rim); font-size: 16px; }
+.part { font-size: 11px; color: var(--muted); } .best { color: var(--gold2); font-family: var(--cond); font-size: 12px; }
+
+/* ──────────────────────────────────
+   PRICING
+────────────────────────────────── */
+.pricing { padding: 140px 0; background: var(--abyss); }
+.pr-top { text-align: center; margin-bottom: 72px; }
+.pr-top p { font-size: 15px; color: var(--body); margin-top: 16px; }
+.p-tog-wr { display: inline-flex; align-items: center; gap: 18px; margin-top: 36px; font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .4em; text-transform: uppercase; color: var(--muted); }
+.ptog { width: 52px; height: 26px; border: 1px solid var(--border); border-radius: 13px; position: relative; transition: border-color .35s; background: var(--iron); }
+.ptog.on { border-color: var(--gold); }
+.ptok { width: 18px; height: 18px; border-radius: 50%; background: var(--gold3); position: absolute; top: 3px; left: 3px; transition: left .4s var(--t1), background .3s, box-shadow .3s; }
+.ptog.on .ptok { left: 27px; background: var(--gold); box-shadow: 0 0 12px rgba(196,164,100,.4); }
+.p-save { font-size: 9px; padding: 3px 14px; border: 1px solid rgba(196,164,100,.35); color: var(--gold); letter-spacing: .18em; border-radius: 2px; }
+.p-yr { color: var(--gold); }
+.p-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+.pc { background: var(--carbon); padding: 60px 52px; border: 1px solid var(--border); position: relative; overflow: hidden; transition: border-color .45s, transform .5s var(--t1), background .45s; }
+.pc:hover { transform: translateY(-8px); background: var(--iron); border-color: rgba(196,164,100,.2); }
+.pc.feat { background: var(--iron); border-color: var(--gold3); transform: translateY(-14px); }
+.pc.feat:hover { transform: translateY(-20px); border-color: var(--gold); }
+.pc.feat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.pc.feat::after { content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(196,164,100,.07) 0%, transparent 70%); pointer-events: none; }
+.pc-badge { position: absolute; top: 0; right: 0; background: var(--gold); color: var(--void); font-family: var(--cond); font-size: 9px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; padding: 8px 22px; clip-path: polygon(0 0,100% 0,100% 100%,12px 100%); }
+.pc-tier { font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .45em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+.pc-amt { font-family: var(--serif); font-size: 76px; font-weight: 300; color: var(--white); line-height: 1; letter-spacing: -.02em; }
+.pc-amt sup { font-size: 30px; vertical-align: top; margin-top: 14px; display: inline-block; color: var(--gold); }
+.pc-per { font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
+.pc-sep { height: 1px; background: var(--border); margin-bottom: 32px; }
+.pc-feats li { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.035); font-size: 13.5px; color: var(--body); display: flex; align-items: flex-start; gap: 14px; line-height: 1.55; }
+.pc-feats li:last-child { border-bottom: none; }
+.pc-feats li::before { content: '—'; color: var(--gold3); font-family: var(--serif); flex-shrink: 0; }
+.pc-btn { margin-top: 44px; width: 100%; padding: 17px; font-family: var(--cond); font-size: 11px; font-weight: 400; letter-spacing: .28em; text-transform: uppercase; border: 1px solid rgba(255,255,255,.1); color: var(--silver); background: transparent; position: relative; overflow: hidden; transition: color .35s, border-color .35s; }
+.pc-btn::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleY(0); transform-origin: bottom; transition: transform .4s var(--t1); }
+.pc-btn:hover { color: var(--void); border-color: var(--gold); }
+.pc-btn:hover::before { transform: scaleY(1); }
+.pc-btn span { position: relative; z-index: 1; }
+.pc.feat .pc-btn { border-color: var(--gold3); color: var(--gold); }
+
+/* ──────────────────────────────────
+   FAQ
+────────────────────────────────── */
+.faq { padding: 140px 0; background: var(--void); }
+.faq-in { display: grid; grid-template-columns: 1fr 1.4fr; gap: 100px; align-items: start; }
+.faq-left p { font-size: 15px; line-height: 1.88; color: var(--body); margin-top: 20px; }
+.faq-cta { display: inline-flex; align-items: center; gap: 12px; font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-top: 36px; border-bottom: 1px solid var(--gold3); padding-bottom: 6px; transition: color .3s, border-color .3s; }
+.faq-cta:hover { color: var(--gold2); border-color: var(--gold2); }
+.faq-list { border-top: 1px solid var(--border); }
+.fi { border-bottom: 1px solid var(--border); overflow: hidden; }
+.fq { padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.fq-t { font-family: var(--serif); font-size: clamp(16px,1.7vw,21px); font-weight: 300; color: var(--cream); line-height: 1.3; transition: color .3s; }
+.fi:hover .fq-t { color: var(--white); }
+.fi-ico { width: 34px; height: 34px; border: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--gold3); font-size: 18px; font-weight: 200; transition: transform .4s var(--t1), border-color .3s, background .3s; }
+.fi.on .fi-ico { transform: rotate(45deg); border-color: var(--gold); background: rgba(196,164,100,.07); color: var(--gold); }
+.fa { max-height: 0; overflow: hidden; font-size: 14px; line-height: 1.88; color: var(--body); padding: 0; transition: max-height .5s var(--t1), padding .5s var(--t1); }
+.fi.on .fa { max-height: 200px; padding: 0 0 26px; }
+
+/* ──────────────────────────────────
+   CTA
+────────────────────────────────── */
+.cta { padding: 160px 0; background: var(--abyss); position: relative; overflow: hidden; }
+.cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(196,164,100,.05) 0%, transparent 70%); pointer-events: none; }
+.cta-deco { position: absolute; inset: 0; pointer-events: none; }
+.cta-in { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 480px; gap: 80px; align-items: start; }
+.cta-left .h2 { font-size: clamp(44px,5.5vw,72px); margin-bottom: 24px; }
+.cta-left p { font-size: 15px; line-height: 1.88; color: var(--body); max-width: 420px; }
+.form { display: flex; flex-direction: column; gap: 12px; }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.f-in { background: var(--carbon); border: 1px solid var(--border); color: var(--cream); font-family: var(--sans); font-size: 14px; font-weight: 300; padding: 16px 20px; width: 100%; outline: none; transition: border-color .35s, box-shadow .35s; }
+.f-in::placeholder { color: var(--muted); }
+.f-in:focus { border-color: var(--gold3); box-shadow: 0 0 0 1px rgba(196,164,100,.12), inset 0 0 16px rgba(196,164,100,.03); }
+.f-sel { background: var(--carbon); border: 1px solid var(--border); color: var(--muted); font-family: var(--cond); font-size: 11px; letter-spacing: .08em; padding: 16px 20px; width: 100%; outline: none; appearance: none; transition: border-color .35s; }
+.f-sel option { background: var(--carbon); color: var(--cream); }
+.f-sel:focus { border-color: var(--gold3); }
+.f-btn { background: var(--gold); color: var(--void); font-family: var(--cond); font-size: 11px; font-weight: 400; letter-spacing: .28em; text-transform: uppercase; padding: 20px; position: relative; overflow: hidden; transition: box-shadow .4s, transform .3s var(--t1); }
+.f-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent); transform: translateX(-200%); }
+.f-btn:hover::before { transform: translateX(200%); transition: transform .55s var(--t2); }
+.f-btn:hover { box-shadow: 0 14px 48px rgba(196,164,100,.42); transform: translateY(-2px); }
+.f-note { font-family: var(--cond); font-size: 9px; font-weight: 200; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); text-align: center; }
+
+/* ──────────────────────────────────
+   FOOTER
+────────────────────────────────── */
+footer { background: var(--void); border-top: 1px solid var(--border); padding: 88px 0 44px; }
+.ft-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px; margin-bottom: 64px; }
+.ft-logo { font-family: var(--serif); font-size: 22px; font-weight: 300; letter-spacing: .32em; text-transform: uppercase; color: var(--white); display: block; margin-bottom: 20px; transition: opacity .3s; }
+.ft-logo:hover { opacity: .7; }
+.ft-logo em { font-style: italic; color: var(--gold); font-weight: 400; }
+.ft-brand p { font-size: 13px; line-height: 1.8; color: var(--muted); max-width: 248px; margin-bottom: 28px; }
+.ft-soc { display: flex; gap: 10px; }
+.fs-a { width: 38px; height: 38px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); transition: border-color .3s, color .3s; }
+.fs-a:hover { border-color: var(--gold3); color: var(--gold); }
+.ft-col h4 { font-family: var(--cond); font-size: 10px; font-weight: 300; letter-spacing: .48em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+.ft-col li { margin-bottom: 12px; }
+.ft-col a { font-size: 13.5px; color: var(--muted); transition: color .25s; }
+.ft-col a:hover { color: var(--silver); }
+.ft-bot { border-top: 1px solid var(--border); padding-top: 32px; display: flex; justify-content: space-between; align-items: center; }
+.ft-bot p { font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .2em; color: var(--muted); }
+.ft-bot a { color: var(--gold3); transition: color .25s; }
+.ft-bot a:hover { color: var(--gold); }
+#btt { position: fixed; bottom: 44px; right: 44px; z-index: 700; width: 48px; height: 48px; border: 1px solid var(--border); background: transparent; color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 15px; transition: opacity .4s, transform .4s var(--t1), border-color .3s, background .3s; opacity: 0; transform: translateY(18px); }
+#btt.on { opacity: 1; transform: translateY(0); }
+#btt:hover { border-color: var(--gold); background: rgba(196,164,100,.07); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:1080px){
+  .container{padding:0 28px;}
+  #nav{padding:0 28px;}.n-links,.nbtn.ghost{display:none;}.n-ham{display:flex;}
+  .hero-content{grid-template-columns:1fr;padding:0 28px 64px;}.h-panel{display:none;}
+  .h1{font-size:clamp(52px,12vw,82px);}
+  .srv-hd{grid-template-columns:1fr;}
+  .srv-grid{grid-template-columns:1fr 1fr;}
+  .sc-a,.sc-b,.sc-c,.sc-d,.sc-e{grid-column:span 1;}
+  .cinema-grid{grid-template-columns:1fr;}
+  .cinema-header{padding:60px 28px 40px;flex-direction:column;align-items:flex-start;gap:20px;}
+  .proc-steps{grid-template-columns:1fr;}
+  .ps,.ps:nth-child(2),.ps:last-child{padding:44px 0;border-right:none;border-bottom:1px solid var(--border);}
+  .ps:last-child{border-bottom:none;}
+  .stats-grid{grid-template-columns:1fr 1fr;}.nb{border-right:none;border-bottom:1px solid var(--border);}
+  .stories-hd{flex-direction:column;align-items:flex-start;gap:28px;}
+  .sl-slide{grid-template-columns:1fr;gap:40px;padding:0 28px;}
+  .cmp-hd{grid-template-columns:1fr;}
+  .p-grid{grid-template-columns:1fr;}.pc.feat{transform:none;}.pc.feat:hover{transform:translateY(-8px);}
+  .faq-in{grid-template-columns:1fr;gap:56px;}
+  .cta-in{grid-template-columns:1fr;gap:52px;}
+  .ft-top{grid-template-columns:1fr 1fr;gap:44px;}
+  #btt{bottom:24px;right:24px;}
+}
+@media(max-width:640px){
+  .srv-grid{grid-template-columns:1fr;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .f-row{grid-template-columns:1fr;}
+  .ft-top{grid-template-columns:1fr;}
+  .h1{font-size:14vw;}
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="cdot"></div>
+<div id="cring"></div>
+
+<!-- PRELOADER -->
+<div id="pre">
+  <div class="pre-logo">Car<em>a</em>vana</div>
+  <div class="pre-sub">The Intelligent Way to Own</div>
+  <div class="pre-track"><div class="pre-fill" id="pf"></div></div>
+  <div class="pre-pct" id="pp">0%</div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="n-logo">Car<em>a</em>vana</a>
+  <ul class="n-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#cinema">In Motion</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#stories">Stories</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <div class="n-right">
+    <button class="nbtn ghost">Sign In</button>
+    <button class="nbtn solid" id="navCta">Get Started</button>
+    <button class="n-ham" id="ham"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="mob">
+  <a href="#services" class="mob-a">Services</a>
+  <a href="#cinema" class="mob-a">In Motion</a>
+  <a href="#process" class="mob-a">Process</a>
+  <a href="#stories" class="mob-a">Stories</a>
+  <a href="#pricing" class="mob-a">Pricing</a>
+  <a href="#cta" class="mob-a" style="color:var(--gold)"><em>Get Started</em></a>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-video-wrap">
+    <!-- Pexels luxury car driving video — autoplay, muted, loop -->
+    <video autoplay muted loop playsinline preload="auto" id="heroVid">
+      <source src="https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_25fps.mp4" type="video/mp4"/>
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grade"></div>
+
+  <div class="hero-content">
+    <div>
+      <div class="h-eyebrow">
+        <div class="label">India's Intelligent Car Platform</div>
+      </div>
+      <h1 class="h1">
+        <span style="display:block">Drive</span>
+        <span style="display:block;font-style:italic;color:var(--gold)">Smarter.</span>
+        <span class="outline" style="display:block">Spend Less.</span>
+      </h1>
+      <p class="h-body">One seamless platform for <strong>buying, insuring, repairing</strong> and comparing every car service in India — with complete transparency and zero compromise.</p>
+      <div class="h-ctas">
+        <button class="btn-fill" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Get Started — It's Free</button>
+        <button class="btn-line" onclick="document.getElementById('process').scrollIntoView({behavior:'smooth'})">
+          <span>How it works</span>
+          <div class="btn-arr"></div>
+        </button>
+      </div>
+    </div>
+    <div class="h-panel">
+      <div class="hp-title">Platform at a Glance</div>
+      <div class="hp-grid">
+        <div class="hp-stat"><div class="hp-val">12K<em>+</em></div><div class="hp-key">Cars Matched</div></div>
+        <div class="hp-stat"><div class="hp-val">98<em>%</em></div><div class="hp-key">Satisfaction</div></div>
+        <div class="hp-div"></div>
+        <div class="hp-stat"><div class="hp-val">₹40<em>L+</em></div><div class="hp-key">Saved</div></div>
+        <div class="hp-stat"><div class="hp-val">200<em>+</em></div><div class="hp-key">Workshops</div></div>
+      </div>
+      <div class="hp-review">
+        <div>
+          <div class="hp-stars">★★★★★</div>
+          <div class="hp-rtxt"><strong>4.9 / 5.0</strong> &nbsp;·&nbsp; 3,200+ verified reviews</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hs-mouse"><div class="hs-wheel"></div></div>
+    <div class="hs-txt">Scroll</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="mq-t">
+    <span class="mq-i">Car Buying</span><span class="mq-d">◆</span>
+    <span class="mq-i">Insurance Comparison</span><span class="mq-d">◆</span>
+    <span class="mq-i">Verified Repairs</span><span class="mq-d">◆</span>
+    <span class="mq-i">Dealership Network</span><span class="mq-d">◆</span>
+    <span class="mq-i">Transparent Pricing</span><span class="mq-d">◆</span>
+    <span class="mq-i">Expert Consulting</span><span class="mq-d">◆</span>
+    <span class="mq-i">Fleet Management</span><span class="mq-d">◆</span>
+    <span class="mq-i">Zero Bias. Always.</span><span class="mq-d">◆</span>
+    <span class="mq-i">Car Buying</span><span class="mq-d">◆</span>
+    <span class="mq-i">Insurance Comparison</span><span class="mq-d">◆</span>
+    <span class="mq-i">Verified Repairs</span><span class="mq-d">◆</span>
+    <span class="mq-i">Dealership Network</span><span class="mq-d">◆</span>
+    <span class="mq-i">Transparent Pricing</span><span class="mq-d">◆</span>
+    <span class="mq-i">Expert Consulting</span><span class="mq-d">◆</span>
+    <span class="mq-i">Fleet Management</span><span class="mq-d">◆</span>
+    <span class="mq-i">Zero Bias. Always.</span><span class="mq-d">◆</span>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="container">
+    <p class="mf-q" data-r="up">"Car ownership in India has always been <em>fragmented, expensive, and opaque.</em> We built Caravana to make it the exact opposite — transparent, effortless, and entirely on your terms."</p>
+    <div class="mf-rule" data-r="fade" data-d="3">
+      <div class="mf-line"></div>
+      <div class="mf-txt">Caravana · Founded 2024 · India</div>
+      <div class="mf-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="srv-hd">
+      <div>
+        <div class="label" data-r="fade" style="margin-bottom:22px">What We Offer</div>
+        <h2 class="h2" data-r="up" data-d="1">Everything your car<br><em>will ever need.</em></h2>
+      </div>
+      <p data-r="up" data-d="2">Five integrated modules — from the day you decide to buy, to years of ownership. One account, one dashboard, total control.</p>
+    </div>
+    <div class="srv-grid">
+
+      <!-- Car Buying -->
+      <div class="sc sc-a" data-r="scale">
+        <div class="sc-n">01</div>
+        <svg class="sc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M6 32l4-14a3 3 0 012.8-2h22.4a3 3 0 012.8 2l4 14H6z"/><path d="M2 32h44M13 40a3 3 0 100-6 3 3 0 000 6zM35 40a3 3 0 100-6 3 3 0 000 6z"/>
+          <path d="M18 18l-2-8M30 18l2-8M6 32v6M42 32v6"/><path d="M20 28h8"/>
+        </svg>
+        <div class="sc-tag">Car Buying</div>
+        <h3 class="sc-name">Buy with<br><em>confidence.</em></h3>
+        <p class="sc-desc">Compare new and used vehicles across 500+ certified dealerships. Live price tracking, unbiased ratings, and expert negotiation — so you always pay the right price.</p>
+        <a href="#cta" class="sc-lnk">Explore module</a>
+      </div>
+
+      <!-- Insurance -->
+      <div class="sc sc-b" data-r="scale" data-d="1">
+        <div class="sc-n">02</div>
+        <svg class="sc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M24 4L8 11v12c0 11 7 20 16 23 9-3 16-12 16-23V11L24 4z"/>
+          <path d="M16 24l5 5 11-11"/>
+        </svg>
+        <div class="sc-tag">Insurance</div>
+        <h3 class="sc-name">20+ insurers.<br><em>One decision.</em></h3>
+        <p class="sc-desc">Real-time quotes from every major insurer. Smart personalisation by car, usage, and budget. Average saving: 30% in under five minutes.</p>
+        <a href="#cta" class="sc-lnk">Explore module</a>
+      </div>
+
+      <!-- Repairs -->
+      <div class="sc sc-c" data-r="scale" data-d="1">
+        <div class="sc-n">03</div>
+        <svg class="sc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M34 14a8 8 0 010 11.3L20 39l-9 1 1-9L26 17A8 8 0 0134 14z"/>
+          <path d="M26 17l5 5M14 31l3 3"/>
+          <circle cx="38" cy="10" r="4"/>
+        </svg>
+        <div class="sc-tag">Repairs</div>
+        <h3 class="sc-name">Vetted<br><em>workshops only.</em></h3>
+        <p class="sc-desc">Book from 200+ verified mechanics. Guaranteed quotes before you commit. Full service history in your dashboard — no surprises, ever.</p>
+        <a href="#cta" class="sc-lnk">Explore module</a>
+      </div>
+
+      <!-- Compare -->
+      <div class="sc sc-d" data-r="scale" data-d="2">
+        <div class="sc-n">04</div>
+        <svg class="sc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M24 8v32M8 24h32"/><circle cx="24" cy="24" r="18"/>
+          <path d="M24 8C14 8 8 16 8 24M24 8c10 0 16 8 16 16"/>
+          <path d="M8 24c0 8 6 16 16 16M40 24c0 8-6 16-16 16"/>
+        </svg>
+        <div class="sc-tag">Compare</div>
+        <h3 class="sc-name">Honest<br><em>side-by-side.</em></h3>
+        <p class="sc-desc">Live comparison engine for dealers, workshops, and insurers. Real reviews, verified ratings — zero paid placements, zero sponsored results.</p>
+        <a href="#cta" class="sc-lnk">Explore module</a>
+      </div>
+
+      <!-- Fleet -->
+      <div class="sc sc-e" data-r="scale" data-d="3">
+        <div class="sc-n">05</div>
+        <svg class="sc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2">
+          <rect x="4" y="18" width="22" height="16" rx="2"/>
+          <path d="M4 26h22M11 34v4M19 34v4M26 26l6-8h8l4 8H26z"/>
+          <circle cx="30" cy="34" r="3"/><circle cx="40" cy="34" r="3"/>
+          <path d="M26 34h1M43 34h1"/>
+        </svg>
+        <div class="sc-tag">Fleet OS</div>
+        <h3 class="sc-name">Built for<br><em>businesses.</em></h3>
+        <p class="sc-desc">Manage up to 20 vehicles, negotiate bulk insurance, dedicated account manager, and a custom analytics dashboard built for your operation.</p>
+        <a href="#cta" class="sc-lnk">Explore module</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SHOWCASE -->
+<section class="cinema" id="cinema">
+  <div class="cinema-header">
+    <div>
+      <div class="label" data-r="fade" style="margin-bottom:22px">In Motion</div>
+      <h2 class="h2" data-r="up" data-d="1">Performance<br><em>meets precision.</em></h2>
+    </div>
+    <p data-r="right" data-d="2">Every car we help you buy, insure, or service is chosen with the same discipline that goes into engineering it.</p>
+  </div>
+  <div class="cinema-grid">
+    <!-- Video 1 -->
+    <div class="cv-card" data-r="fade">
+      <video class="cv-video" autoplay muted loop playsinline>
+        <source src="https://videos.pexels.com/video-files/3209828/3209828-hd_1920_1080_24fps.mp4" type="video/mp4"/>
+      </video>
+      <div class="cv-overlay"></div>
+      <div class="cv-play">▶</div>
+      <div class="cv-info">
+        <div class="cv-label">Car Buying</div>
+        <div class="cv-title">Find your perfect match</div>
+      </div>
+    </div>
+    <!-- Video 2 -->
+    <div class="cv-card" data-r="fade" data-d="1">
+      <video class="cv-video" autoplay muted loop playsinline>
+        <source src="https://videos.pexels.com/video-files/4056723/4056723-hd_1280_720_25fps.mp4" type="video/mp4"/>
+      </video>
+      <div class="cv-overlay"></div>
+      <div class="cv-play">▶</div>
+      <div class="cv-info">
+        <div class="cv-label">Insurance</div>
+        <div class="cv-title">Protected every mile</div>
+      </div>
+    </div>
+    <!-- Video 3 -->
+    <div class="cv-card" data-r="fade" data-d="2">
+      <video class="cv-video" autoplay muted loop playsinline>
+        <source src="https://videos.pexels.com/video-files/2961751/2961751-hd_1920_1080_30fps.mp4" type="video/mp4"/>
+      </video>
+      <div class="cv-overlay"></div>
+      <div class="cv-play">▶</div>
+      <div class="cv-info">
+        <div class="cv-label">Expert Service</div>
+        <div class="cv-title">Precision at every turn</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="container proc-in">
+    <div class="proc-hd">
+      <div class="label" data-r="fade" style="margin-bottom:22px">How It Works</div>
+      <h2 class="h2" data-r="up" data-d="1">Three steps.<br><em>Zero friction.</em></h2>
+    </div>
+    <div class="proc-steps">
+      <div class="ps" data-r="left"><div class="ps-dot"></div><div class="ps-num">01</div><div class="ps-rule"></div><h3 class="ps-title">Tell us what<br><em>you need.</em></h3><p class="ps-body">Answer a few precise questions — buying, insuring, or servicing your car. Our intake routes you to the right module in under 60 seconds.</p></div>
+      <div class="ps" data-r="up" data-d="1"><div class="ps-dot"></div><div class="ps-num">02</div><div class="ps-rule"></div><h3 class="ps-title">Get matched<br><em>instantly.</em></h3><p class="ps-body">Our engine pulls live prices, authentic reviews, and verified provider data — filtered to your exact location, budget, and preference profile.</p></div>
+      <div class="ps" data-r="right" data-d="2"><div class="ps-dot"></div><div class="ps-num">03</div><div class="ps-rule"></div><h3 class="ps-title">Confirm<br><em>and relax.</em></h3><p class="ps-body">Book or buy in one click. Our concierge stays on standby — pre-sale, during service, and post-delivery. Complete peace of mind, guaranteed.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="nb" data-r="up"><div class="nb-val"><span data-cnt="12">0</span>K<em>+</em></div><div class="nb-lbl">Vehicles Matched</div><div class="nb-sub">across 500+ dealerships in 6 cities</div></div>
+    <div class="nb" data-r="up" data-d="1"><div class="nb-val">₹40<em>L+</em></div><div class="nb-lbl">Client Savings</div><div class="nb-sub">in transparent purchase deals</div></div>
+    <div class="nb" data-r="up" data-d="2"><div class="nb-val"><span data-cnt="98">0</span><em>%</em></div><div class="nb-lbl">Satisfaction Rate</div><div class="nb-sub">from 3,200+ verified reviews</div></div>
+    <div class="nb" data-r="up" data-d="3"><div class="nb-val"><span data-cnt="200">0</span><em>+</em></div><div class="nb-lbl">Verified Workshops</div><div class="nb-sub">with guaranteed quote protection</div></div>
+  </div>
+</div>
+
+<!-- STORIES -->
+<section class="stories" id="stories">
+  <div class="container">
+    <div class="stories-hd">
+      <div><div class="label" data-r="fade" style="margin-bottom:22px">Client Stories</div><h2 class="h2" data-r="up" data-d="1">Real people.<br><em>Real results.</em></h2></div>
+      <div class="sl-nav" data-r="fade" data-d="2">
+        <button class="sl-btn" id="slPrev">←</button>
+        <div class="sl-dots"><div class="sl-dot on" data-i="0"></div><div class="sl-dot" data-i="1"></div><div class="sl-dot" data-i="2"></div></div>
+        <button class="sl-btn" id="slNext">→</button>
+      </div>
+    </div>
+  </div>
+  <div class="sl-stage">
+    <div class="sl-track" id="slTrack">
+      <div class="sl-slide"><div><span class="sl-oq">"</span><div class="sl-stars">★★★★★</div><p class="sl-q">Caravana found me a deal ₹1.8 lakh below what the dealership had quoted. Their comparison tool exposed the overcharging in seconds. Genuinely life-changing.</p><div class="sl-meta"><div class="sl-rule"></div><div class="sl-name">Rahul Kapoor</div><div class="sl-role">First-time Buyer · Mumbai</div></div></div><div><div class="sl-num">₹1.8<em>L</em></div><div class="sl-num-lbl">Saved on Purchase Price</div><div class="sl-bars"><div class="sl-br"><div class="sl-bk">Transparency</div><div class="sl-bt"><div class="sl-bf" style="width:96%"></div></div><div class="sl-bv">9.6</div></div><div class="sl-br"><div class="sl-bk">Time Saved</div><div class="sl-bt"><div class="sl-bf" style="width:88%"></div></div><div class="sl-bv">9h</div></div><div class="sl-br"><div class="sl-bk">Satisfaction</div><div class="sl-bt"><div class="sl-bf" style="width:100%"></div></div><div class="sl-bv">10</div></div></div></div></div>
+      <div class="sl-slide"><div><span class="sl-oq">"</span><div class="sl-stars">★★★★★</div><p class="sl-q">Insurance comparison used to take days. Caravana gave me 14 live quotes in five minutes. I cut my annual premium by 30% and cancelled my old policy that evening.</p><div class="sl-meta"><div class="sl-rule"></div><div class="sl-name">Priya Sharma</div><div class="sl-role">Freelancer · Bengaluru</div></div></div><div><div class="sl-num">30<em>%</em></div><div class="sl-num-lbl">Reduction in Annual Premium</div><div class="sl-bars"><div class="sl-br"><div class="sl-bk">Speed</div><div class="sl-bt"><div class="sl-bf" style="width:98%"></div></div><div class="sl-bv">5min</div></div><div class="sl-br"><div class="sl-bk">Providers</div><div class="sl-bt"><div class="sl-bf" style="width:85%"></div></div><div class="sl-bv">14</div></div><div class="sl-br"><div class="sl-bk">Savings</div><div class="sl-bt"><div class="sl-bf" style="width:92%"></div></div><div class="sl-bv">30%</div></div></div></div></div>
+      <div class="sl-slide"><div><span class="sl-oq">"</span><div class="sl-stars">★★★★★</div><p class="sl-q">Transparent quote upfront, verified workshop, car ready exactly on time. I've sent three colleagues here since. The trust is completely unmatched anywhere else.</p><div class="sl-meta"><div class="sl-rule"></div><div class="sl-name">Arjun Mehta</div><div class="sl-role">Business Owner · Delhi NCR</div></div></div><div><div class="sl-num">200<em>+</em></div><div class="sl-num-lbl">Verified Workshop Partners</div><div class="sl-bars"><div class="sl-br"><div class="sl-bk">Trust Score</div><div class="sl-bt"><div class="sl-bf" style="width:99%"></div></div><div class="sl-bv">9.9</div></div><div class="sl-br"><div class="sl-bk">On-time Rate</div><div class="sl-bt"><div class="sl-bf" style="width:95%"></div></div><div class="sl-bv">95%</div></div><div class="sl-br"><div class="sl-bk">Referrals</div><div class="sl-bt"><div class="sl-bf" style="width:75%"></div></div><div class="sl-bv">3</div></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="compare" id="compare">
+  <div class="container">
+    <div class="cmp-hd"><div><div class="label" data-r="fade" style="margin-bottom:22px">The Difference</div><h2 class="h2" data-r="up" data-d="1">Why Caravana<br><em>wins every time.</em></h2></div><p data-r="right" data-d="1">No competitor matches the breadth, transparency, or savings Caravana delivers to India's car owners.</p></div>
+    <div data-r="up" data-d="2">
+      <div class="cmp-cap"><div></div><div>★ Recommended</div><div></div><div></div></div>
+      <div class="cmp-t">
+        <div class="cr hd"><div class="cc feat">Feature</div><div class="cc cv">Caravana</div><div class="cc">Traditional Dealer</div><div class="cc">DIY Research</div></div>
+        <div class="cr"><div class="cc feat">Transparent, zero-bias pricing</div><div class="cc cv"><span class="tick">✓</span></div><div class="cc"><span class="cross">✗</span></div><div class="cc"><span class="cross">✗</span></div></div>
+        <div class="cr"><div class="cc feat">Live insurance comparison (20+ providers)</div><div class="cc cv"><span class="tick">✓</span></div><div class="cc"><span class="cross">✗</span></div><div class="cc"><span class="part">Partial</span></div></div>
+        <div class="cr"><div class="cc feat">Guaranteed mechanic quotes</div><div class="cc cv"><span class="tick">✓</span></div><div class="cc"><span class="cross">✗</span></div><div class="cc"><span class="cross">✗</span></div></div>
+        <div class="cr"><div class="cc feat">All car needs — one platform</div><div class="cc cv"><span class="tick">✓</span></div><div class="cc"><span class="cross">✗</span></div><div class="cc"><span class="cross">✗</span></div></div>
+        <div class="cr"><div class="cc feat">Neutral expert consulting</div><div class="cc cv"><span class="tick">✓</span></div><div class="cc"><span class="part">Biased</span></div><div class="cc"><span class="cross">✗</span></div></div>
+        <div class="cr"><div class="cc feat">Average time saved</div><div class="cc cv"><span class="best">8–12 Hours</span></div><div class="cc" style="color:var(--rim)">—</div><div class="cc" style="color:var(--rim)">—</div></div>
+        <div class="cr"><div class="cc feat">Average money saved</div><div class="cc cv"><span class="best">₹1–3 Lakhs</span></div><div class="cc" style="color:var(--rim)">—</div><div class="cc" style="color:var(--rim)">—</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="pr-top"><div class="label" data-r="fade" style="margin-bottom:22px;display:inline-flex">Pricing</div><br><h2 class="h2" data-r="up" data-d="1">Simple, honest<br><em>pricing.</em></h2><p data-r="fade" data-d="2">No hidden fees. No commissions charged to you. Cancel any time.</p>
+      <div class="p-tog-wr" data-r="fade" data-d="3"><span>Monthly</span><div class="ptog on" id="ptog"><div class="ptok"></div></div><span class="p-yr">Annual</span><span class="p-save">Save 20%</span></div>
+    </div>
+    <div class="p-grid">
+      <div class="pc" data-r="up"><div class="pc-tier">Essential</div><div class="pc-amt"><sup>₹</sup>0</div><div class="pc-per">Forever free</div><div class="pc-sep"></div><ul class="pc-feats"><li>Full car &amp; insurance comparison</li><li>5 repair quotes per month</li><li>Community support access</li><li>Basic price tracker</li></ul><button class="pc-btn"><span>Get started — free</span></button></div>
+      <div class="pc feat" data-r="up" data-d="1"><div class="pc-badge">Most Popular</div><div class="pc-tier">Pro</div><div class="pc-amt"><sup>₹</sup><span id="proAmt">399</span></div><div class="pc-per">Per month</div><div class="pc-sep"></div><ul class="pc-feats"><li>Unlimited comparisons</li><li>Priority mechanic booking</li><li>1-on-1 expert consultation</li><li>Insurance negotiation support</li><li>Full service history tracking</li><li>Exclusive partner discounts</li></ul><button class="pc-btn"><span>Start 7-day free trial</span></button></div>
+      <div class="pc" data-r="up" data-d="2"><div class="pc-tier">Fleet</div><div class="pc-amt"><sup>₹</sup><span id="flAmt">1599</span></div><div class="pc-per">Per month</div><div class="pc-sep"></div><ul class="pc-feats"><li>Fleet management (up to 20)</li><li>Dedicated account manager</li><li>Bulk insurance negotiation</li><li>Priority repair SLA</li><li>Custom analytics dashboard</li></ul><button class="pc-btn"><span>Contact sales</span></button></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-in">
+      <div class="faq-left"><div class="label" data-r="fade" style="margin-bottom:22px">FAQ</div><h2 class="h2" data-r="up" data-d="1">Everything<br>you need<br><em>to know.</em></h2><p data-r="up" data-d="2">We've answered the questions we get most. If yours isn't here, our team is one message away.</p><a href="#cta" class="faq-cta" data-r="up" data-d="3">Talk to the team →</a></div>
+      <div class="faq-list" data-r="up" data-d="2">
+        <div class="fi"><div class="fq"><span class="fq-t">Is Caravana genuinely free to start?</span><div class="fi-ico">+</div></div><div class="fa">Yes — the Essential plan is free forever. Full access to all comparison tools, five repair quotes a month, and community support. No credit card required, ever.</div></div>
+        <div class="fi"><div class="fq"><span class="fq-t">How is Caravana unbiased if providers pay you?</span><div class="fi-ico">+</div></div><div class="fa">Providers pay performance-based referral fees only after you choose them — never before. No provider can pay to rank higher or influence your results in any way.</div></div>
+        <div class="fi"><div class="fq"><span class="fq-t">Are the mechanic quotes legally binding?</span><div class="fi-ico">+</div></div><div class="fa">Every quote from our verified network is locked for 48 hours. If your final bill exceeds the quoted amount without prior written approval, we cover the difference up to ₹2,000.</div></div>
+        <div class="fi"><div class="fq"><span class="fq-t">Which cities is Caravana currently live in?</span><div class="fi-ico">+</div></div><div class="fa">Currently live in Mumbai, Delhi NCR, Bengaluru, Pune, Hyderabad, and Chennai. Expanding to 12 more cities by Q3 2025 — enter your city in the form and we'll notify you.</div></div>
+        <div class="fi"><div class="fq"><span class="fq-t">Can I switch or cancel my plan at any time?</span><div class="fi-ico">+</div></div><div class="fa">Absolutely. Upgrade, downgrade, or cancel directly from your dashboard at any point. No lock-in periods, no cancellation penalties — ever.</div></div>
+        <div class="fi"><div class="fq"><span class="fq-t">How accurate are the insurance comparisons?</span><div class="fi-ico">+</div></div><div class="fa">Quotes are pulled live via direct insurer APIs — not cached data. What you see is exactly what you'll pay, down to the rupee, at that moment.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <svg class="cta-deco" viewBox="0 0 1440 500" fill="none" preserveAspectRatio="xMidYMid slice">
+    <path d="M0 250H280V120H520V380H760V160H1000V320H1240V80H1440" stroke="rgba(196,164,100,.07)" stroke-width="1"/>
+    <path d="M0 380H180V240H440V420H680V200H920V360H1160V140H1440" stroke="rgba(196,164,100,.04)" stroke-width="1"/>
+    <circle cx="280" cy="250" r="4" fill="rgba(196,164,100,.2)"/><circle cx="520" cy="120" r="4" fill="rgba(196,164,100,.2)"/>
+    <circle cx="760" cy="380" r="4" fill="rgba(196,164,100,.2)"/><circle cx="1000" cy="160" r="4" fill="rgba(196,164,100,.2)"/>
+    <circle cx="1240" cy="320" r="4" fill="rgba(196,164,100,.2)"/>
+  </svg>
+  <div class="container">
+    <div class="cta-in">
+      <div class="cta-left">
+        <div class="label" data-r="fade" style="margin-bottom:28px">Get Started</div>
+        <h2 class="h2" data-r="up" data-d="1">Ready to drive<br><em>smarter?</em><br><span style="color:var(--muted);font-style:normal">Let's begin.</span></h2>
+        <p data-r="up" data-d="2" style="margin-top:24px">Fill in your details and we'll match you with the best options in your city — completely free. Takes sixty seconds.</p>
+      </div>
+      <div class="form" data-r="up" data-d="3">
+        <div class="f-row"><input class="f-in" type="text" placeholder="Your name"/><input class="f-in" type="tel" placeholder="Phone number"/></div>
+        <input class="f-in" type="email" placeholder="Email address"/>
+        <select class="f-sel"><option value="" disabled selected>I need help with…</option><option>Buying a car</option><option>Comparing insurance</option><option>Booking a repair</option><option>Comparing providers</option><option>Fleet management</option></select>
+        <input class="f-in" type="text" placeholder="Your city"/>
+        <button class="f-btn">Get started — it's free &nbsp; →</button>
+        <p class="f-note">Encrypted · Never shared · Zero spam</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="ft-top">
+      <div class="ft-brand"><a href="#" class="ft-logo">Car<em>a</em>vana</a><p>India's most transparent car ownership platform. We succeed only when you do. Built for India's 200M+ car owners.</p><div class="ft-soc"><a href="#" class="fs-a">in</a><a href="#" class="fs-a">tw</a><a href="#" class="fs-a">yt</a><a href="#" class="fs-a">ig</a></div></div>
+      <div class="ft-col"><h4>Services</h4><ul><li><a href="#">Car Buying</a></li><li><a href="#">Insurance</a></li><li><a href="#">Repairs</a></li><li><a href="#">Compare</a></li><li><a href="#">Fleet OS</a></li></ul></div>
+      <div class="ft-col"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Partners</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a href="#">Blog</a></li></ul></div>
+      <div class="ft-col"><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li><li><a href="#">Security</a></li><li><a href="#">Help Centre</a></li></ul></div>
+    </div>
+    <div class="ft-bot"><p>© 2025 Caravana · All rights reserved · Built for India</p><p><a href="#">200M+ people deserve better.</a></p></div>
+  </div>
+</footer>
+<button id="btt">↑</button>
+
+<script>
+/* ── PRELOADER ── */
+const pf=document.getElementById('pf'),pp=document.getElementById('pp');
+let pv=0;const piv=setInterval(()=>{
+  pv+=Math.random()*10+2;
+  if(pv>=100){pv=100;clearInterval(piv);setTimeout(()=>document.getElementById('pre').classList.add('bye'),700);}
+  pf.style.width=pv+'%';pp.textContent=Math.floor(pv)+'%';
+},55);
+
+/* ── SCROLL ── */
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY,h=document.body.scrollHeight-innerHeight;
+  document.getElementById('prog').style.width=(y/h*100)+'%';
+  document.getElementById('nav').classList.toggle('on',y>60);
+  document.getElementById('btt').classList.toggle('on',y>500);
+  ['services','cinema','process','stories','compare','pricing','faq'].forEach(id=>{
+    const el=document.getElementById(id),lk=document.querySelector(`.n-links a[href="#${id}"]`);
+    if(!el||!lk)return;const r=el.getBoundingClientRect();
+    lk.classList.toggle('on',r.top<110&&r.bottom>110);
+  });
+},{passive:true});
+
+/* ── CURSOR ── */
+const cd=document.getElementById('cdot'),cr=document.getElementById('cring');
+let mx=0,my=0,bx=0,by=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
+document.addEventListener('mouseleave',()=>{cd.style.opacity='0';cr.style.opacity='0';});
+document.addEventListener('mouseenter',()=>{cd.style.opacity='1';cr.style.opacity='1';});
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cl'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cl'));
+});
+document.querySelectorAll('.sc,.nb,.ps,.pc,.fi,.h-datum,.cv-card,.sl-slide').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+});
+(function ring(){bx+=(mx-bx)*.12;by+=(my-by)*.12;cr.style.left=bx+'px';cr.style.top=by+'px';requestAnimationFrame(ring);})();
+
+/* ── MAGNETIC BUTTONS ── */
+document.querySelectorAll('.btn-fill,.nbtn.solid,.f-btn').forEach(b=>{
+  b.addEventListener('mousemove',e=>{
+    const r=b.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)*.22,y=(e.clientY-r.top-r.height/2)*.22;
+    b.style.transform=`translateY(-3px) translate(${x}px,${y}px)`;
+  });
+  b.addEventListener('mouseleave',()=>b.style.transform='');
+});
+
+/* ── NAV ── */
+const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+ham.addEventListener('click',()=>{ham.classList.toggle('x');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ham.classList.remove('x');mob.classList.remove('open');document.body.style.overflow='';}));
+document.getElementById('navCta').addEventListener('click',()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'}));
+function mq(){ham.style.display=innerWidth<=1080?'flex':'none';}mq();window.addEventListener('resize',mq);
+
+/* ── SCROLL REVEAL ── */
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}
+}),{threshold:.08});
+document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
+
+/* ── COUNTERS ── */
+function cu(el,t){let s=null;const d=1800;
+  (function f(ts){if(!s)s=ts;const p=Math.min((ts-s)/d,1),e=1-Math.pow(1-p,3);el.textContent=Math.floor(e*t);if(p<1)requestAnimationFrame(f);else el.textContent=t;})();}
+const co=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){cu(e.target,+e.target.dataset.cnt);co.unobserve(e.target);}
+}),{threshold:.5});
+document.querySelectorAll('[data-cnt]').forEach(el=>co.observe(el));
+
+/* ── SLIDER ── */
+const track=document.getElementById('slTrack'),dots=document.querySelectorAll('.sl-dot');
+let cur=0,tot=3,auto;
+function goTo(i){
+  cur=((i%tot)+tot)%tot;
+  track.style.transform=`translateX(-${cur*100}%)`;
+  dots.forEach((d,j)=>d.classList.toggle('on',j===cur));
+  document.querySelectorAll('.sl-bf').forEach(b=>b.classList.remove('go'));
+  setTimeout(()=>{const s=document.querySelectorAll('.sl-slide')[cur];s.querySelectorAll('.sl-bf').forEach(b=>b.classList.add('go'));},300);
+}
+document.getElementById('slPrev').addEventListener('click',()=>{clearInterval(auto);goTo(cur-1);sa();});
+document.getElementById('slNext').addEventListener('click',()=>{clearInterval(auto);goTo(cur+1);sa();});
+dots.forEach(d=>d.addEventListener('click',()=>{clearInterval(auto);goTo(+d.dataset.i);sa();}));
+function sa(){auto=setInterval(()=>goTo(cur+1),5500);}
+sa();
+const sObs=new IntersectionObserver(e=>{if(e[0].isIntersecting)goTo(0);},{threshold:.3});
+sObs.observe(document.querySelector('.sl-stage'));
+
+/* ── PRICING TOGGLE ── */
+const ptog=document.getElementById('ptog');let ann=true;
+ptog.addEventListener('click',()=>{ann=!ann;ptog.classList.toggle('on',ann);document.getElementById('proAmt').textContent=ann?'399':'499';document.getElementById('flAmt').textContent=ann?'1599':'1999';});
+
+/* ── FAQ ── */
+document.querySelectorAll('.fq').forEach(q=>{
+  q.addEventListener('click',()=>{const it=q.closest('.fi'),was=it.classList.contains('on');document.querySelectorAll('.fi').forEach(i=>i.classList.remove('on'));if(!was)it.classList.add('on');});
+});
+
+/* ── PRICING 3D TILT ── */
+document.querySelectorAll('.pc').forEach(c=>{
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();const x=(e.clientX-r.left-r.width/2)*.03,y=(e.clientY-r.top-r.height/2)*.03;c.style.transform=`translateY(-8px) perspective(900px) rotateX(${-y}deg) rotateY(${x}deg)`;});
+  c.addEventListener('mouseleave',()=>c.style.transform='');
+});
+
+/* ── BTT ── */
+document.getElementById('btt').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ── HERO VIDEO fallback ── */
+const hv=document.getElementById('heroVid');
+if(hv){hv.addEventListener('error',()=>{document.querySelector('.hero-video-wrap').style.background='linear-gradient(168deg,#0b0910 0%,#060608 40%,#0a0810 100%)';});}
+</script>
+</body>
+</html>
