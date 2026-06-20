@@ -4,6 +4,16 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Caravana — The Intelligent Way to Own</title>
+<meta name="description" content="Caravana is India's most transparent car ownership platform. Buy, insure, repair and compare every car service in one place — with zero bias and complete transparency."/>
+<meta property="og:title" content="Caravana — The Intelligent Way to Own"/>
+<meta property="og:description" content="India's most transparent car ownership platform. Buy, insure, repair and compare — zero bias, complete transparency."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://caravana-swart.vercel.app"/>
+<meta property="og:image" content="https://caravana-swart.vercel.app/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Caravana — The Intelligent Way to Own"/>
+<meta name="twitter:description" content="India's most transparent car ownership platform. Buy, insure, repair and compare — zero bias, complete transparency."/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23040407'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' fill='%23C4A464' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Instrument+Sans:wght@300;400;500;600&family=Barlow+Condensed:wght@200;300;400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -565,6 +575,7 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
     <li><a href="#cinema">In Motion</a></li>
     <li><a href="#process">Process</a></li>
     <li><a href="#stories">Stories</a></li>
+    <li><a href="#compare">Compare</a></li>
     <li><a href="#pricing">Pricing</a></li>
   </ul>
   <div class="n-right">
@@ -578,6 +589,7 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
   <a href="#cinema" class="mob-a">In Motion</a>
   <a href="#process" class="mob-a">Process</a>
   <a href="#stories" class="mob-a">Stories</a>
+  <a href="#compare" class="mob-a">Compare</a>
   <a href="#pricing" class="mob-a">Pricing</a>
   <a href="#cta" class="mob-a" style="color:var(--gold)"><em>Get Started</em></a>
 </div>
@@ -590,6 +602,7 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
       <source src="https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_25fps.mp4" type="video/mp4"/>
     </video>
   </div>
+  <noscript><style>#pre{display:none!important}</style></noscript>
   <div class="hero-overlay"></div>
   <div class="hero-grade"></div>
 
@@ -892,7 +905,7 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
         <div class="fi"><div class="fq"><span class="fq-t">Is Caravana genuinely free to start?</span><div class="fi-ico">+</div></div><div class="fa">Yes — the Essential plan is free forever. Full access to all comparison tools, five repair quotes a month, and community support. No credit card required, ever.</div></div>
         <div class="fi"><div class="fq"><span class="fq-t">How is Caravana unbiased if providers pay you?</span><div class="fi-ico">+</div></div><div class="fa">Providers pay performance-based referral fees only after you choose them — never before. No provider can pay to rank higher or influence your results in any way.</div></div>
         <div class="fi"><div class="fq"><span class="fq-t">Are the mechanic quotes legally binding?</span><div class="fi-ico">+</div></div><div class="fa">Every quote from our verified network is locked for 48 hours. If your final bill exceeds the quoted amount without prior written approval, we cover the difference up to ₹2,000.</div></div>
-        <div class="fi"><div class="fq"><span class="fq-t">Which cities is Caravana currently live in?</span><div class="fi-ico">+</div></div><div class="fa">Currently live in Mumbai, Delhi NCR, Bengaluru, Pune, Hyderabad, and Chennai. Expanding to 12 more cities by Q3 2025 — enter your city in the form and we'll notify you.</div></div>
+        <div class="fi"><div class="fq"><span class="fq-t">Which cities is Caravana currently live in?</span><div class="fi-ico">+</div></div><div class="fa">Currently live in Mumbai, Delhi NCR, Bengaluru, Pune, Hyderabad, and Chennai. Expanding to 12 more cities by Q2 2026 — enter your city in the form and we'll notify you.</div></div>
         <div class="fi"><div class="fq"><span class="fq-t">Can I switch or cancel my plan at any time?</span><div class="fi-ico">+</div></div><div class="fa">Absolutely. Upgrade, downgrade, or cancel directly from your dashboard at any point. No lock-in periods, no cancellation penalties — ever.</div></div>
         <div class="fi"><div class="fq"><span class="fq-t">How accurate are the insurance comparisons?</span><div class="fi-ico">+</div></div><div class="fa">Quotes are pulled live via direct insurer APIs — not cached data. What you see is exactly what you'll pay, down to the rupee, at that moment.</div></div>
       </div>
@@ -916,13 +929,17 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
         <h2 class="h2" data-r="up" data-d="1">Ready to drive<br><em>smarter?</em><br><span style="color:var(--muted);font-style:normal">Let's begin.</span></h2>
         <p data-r="up" data-d="2" style="margin-top:24px">Fill in your details and we'll match you with the best options in your city — completely free. Takes sixty seconds.</p>
       </div>
-      <div class="form" data-r="up" data-d="3">
-        <div class="f-row"><input class="f-in" type="text" placeholder="Your name"/><input class="f-in" type="tel" placeholder="Phone number"/></div>
-        <input class="f-in" type="email" placeholder="Email address"/>
-        <select class="f-sel"><option value="" disabled selected>I need help with…</option><option>Buying a car</option><option>Comparing insurance</option><option>Booking a repair</option><option>Comparing providers</option><option>Fleet management</option></select>
-        <input class="f-in" type="text" placeholder="Your city"/>
-        <button class="f-btn">Get started — it's free &nbsp; →</button>
-        <p class="f-note">Encrypted · Never shared · Zero spam</p>
+      <div class="form" data-r="up" data-d="3" id="ctaForm">
+        <div class="f-row"><input class="f-in" id="fName" type="text" placeholder="Your name" required/><input class="f-in" id="fPhone" type="tel" placeholder="Phone number" pattern="[6-9][0-9]{9}" required/></div>
+        <input class="f-in" id="fEmail" type="email" placeholder="Email address" required/>
+        <select class="f-sel" id="fNeed"><option value="" disabled selected>I need help with…</option><option>Buying a car</option><option>Comparing insurance</option><option>Booking a repair</option><option>Comparing providers</option><option>Fleet management</option></select>
+        <input class="f-in" id="fCity" type="text" placeholder="Your city" required/>
+        <button class="f-btn" id="fSubmit" type="button">Get started — it's free &nbsp; →</button>
+        <p class="f-note" id="fNote">Encrypted · Never shared · Zero spam</p>
+        <div id="fSuccess" style="display:none;text-align:center;padding:28px 0;">
+          <div style="font-family:var(--serif);font-size:clamp(22px,2.5vw,32px);font-weight:300;color:var(--white);margin-bottom:12px">We'll be in touch <em style="color:var(--gold)">soon.</em></div>
+          <div style="font-family:var(--cond);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)">Check your inbox within 24 hours</div>
+        </div>
       </div>
     </div>
   </div>
@@ -932,12 +949,12 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
 <footer>
   <div class="container">
     <div class="ft-top">
-      <div class="ft-brand"><a href="#" class="ft-logo">Car<em>a</em>vana</a><p>India's most transparent car ownership platform. We succeed only when you do. Built for India's 200M+ car owners.</p><div class="ft-soc"><a href="#" class="fs-a">in</a><a href="#" class="fs-a">tw</a><a href="#" class="fs-a">yt</a><a href="#" class="fs-a">ig</a></div></div>
-      <div class="ft-col"><h4>Services</h4><ul><li><a href="#">Car Buying</a></li><li><a href="#">Insurance</a></li><li><a href="#">Repairs</a></li><li><a href="#">Compare</a></li><li><a href="#">Fleet OS</a></li></ul></div>
-      <div class="ft-col"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Partners</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a href="#">Blog</a></li></ul></div>
-      <div class="ft-col"><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li><li><a href="#">Security</a></li><li><a href="#">Help Centre</a></li></ul></div>
+      <div class="ft-brand"><a href="#" class="ft-logo">Car<em>a</em>vana</a><p>India's most transparent car ownership platform. We succeed only when you do. Built for India's 200M+ car owners.</p><div class="ft-soc"><a href="https://linkedin.com" target="_blank" rel="noopener" class="fs-a">in</a><a href="https://twitter.com" target="_blank" rel="noopener" class="fs-a">tw</a><a href="https://youtube.com" target="_blank" rel="noopener" class="fs-a">yt</a><a href="https://instagram.com" target="_blank" rel="noopener" class="fs-a">ig</a></div></div>
+      <div class="ft-col"><h4>Services</h4><ul><li><a href="#services">Car Buying</a></li><li><a href="#services">Insurance</a></li><li><a href="#services">Repairs</a></li><li><a href="#compare">Compare</a></li><li><a href="#services">Fleet OS</a></li></ul></div>
+      <div class="ft-col"><h4>Company</h4><ul><li><a href="#cta">About</a></li><li><a href="#cta">Partners</a></li><li><a href="#cta">Careers</a></li><li><a href="#cta">Press</a></li><li><a href="#cta">Blog</a></li></ul></div>
+      <div class="ft-col"><h4>Legal</h4><ul><li><a href="#cta">Privacy Policy</a></li><li><a href="#cta">Terms of Use</a></li><li><a href="#cta">Security</a></li><li><a href="#faq">Help Centre</a></li></ul></div>
     </div>
-    <div class="ft-bot"><p>© 2025 Caravana · All rights reserved · Built for India</p><p><a href="#">200M+ people deserve better.</a></p></div>
+    <div class="ft-bot"><p>© 2026 Caravana · All rights reserved · Built for India</p><p><a href="#cta">200M+ people deserve better.</a></p></div>
   </div>
 </footer>
 <button id="btt">↑</button>
@@ -1050,6 +1067,29 @@ document.getElementById('btt').addEventListener('click',()=>window.scrollTo({top
 /* ── HERO VIDEO fallback ── */
 const hv=document.getElementById('heroVid');
 if(hv){hv.addEventListener('error',()=>{document.querySelector('.hero-video-wrap').style.background='linear-gradient(168deg,#0b0910 0%,#060608 40%,#0a0810 100%)';});}
+
+/* ── FORM SUBMIT ── */
+document.getElementById('fSubmit').addEventListener('click',()=>{
+  const name=document.getElementById('fName').value.trim();
+  const phone=document.getElementById('fPhone').value.trim();
+  const email=document.getElementById('fEmail').value.trim();
+  const need=document.getElementById('fNeed').value;
+  const city=document.getElementById('fCity').value.trim();
+  const note=document.getElementById('fNote');
+  const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRe=/^[6-9][0-9]{9}$/;
+  if(!name){note.textContent='Please enter your name.';note.style.color='var(--gold)';return;}
+  if(!phoneRe.test(phone)){note.textContent='Enter a valid 10-digit Indian mobile number.';note.style.color='var(--gold)';return;}
+  if(!emailRe.test(email)){note.textContent='Enter a valid email address.';note.style.color='var(--gold)';return;}
+  if(!need){note.textContent='Please select what you need help with.';note.style.color='var(--gold)';return;}
+  if(!city){note.textContent='Please enter your city.';note.style.color='var(--gold)';return;}
+  const btn=document.getElementById('fSubmit');
+  btn.textContent='Sending…';btn.style.opacity='.7';btn.disabled=true;
+  setTimeout(()=>{
+    document.getElementById('ctaForm').querySelectorAll('input,select,button,p').forEach(el=>el.style.display='none');
+    document.getElementById('fSuccess').style.display='block';
+  },900);
+});
 </script>
 </body>
 </html>
