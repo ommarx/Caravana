@@ -561,7 +561,47 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
 
 <!-- PRELOADER -->
 <div id="pre">
-  <div class="pre-logo">Car<em>a</em>vana</div>
+  <div class="pre-logo" style="display:flex;flex-direction:column;align-items:center;gap:18px;">
+  <svg width="64" height="76" viewBox="0 0 108 180" xmlns="http://www.w3.org/2000/svg" aria-label="Caravana emblem">
+    <defs>
+      <linearGradient id="gP1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8CC80"/><stop offset="50%" stop-color="#C4A464"/><stop offset="100%" stop-color="#8A6830"/></linearGradient>
+      <linearGradient id="gP2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#DEC080"/><stop offset="100%" stop-color="#9E7E44"/></linearGradient>
+      <linearGradient id="gPs" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#111118"/><stop offset="100%" stop-color="#07070D"/></linearGradient>
+    </defs>
+    <path d="M54 2 L100 26 L108 86 L100 148 L54 174 L8 148 L0 86 L8 26 Z" fill="url(#gP1)"/>
+    <path d="M54 10 L94 32 L102 88 L94 144 L54 165 L14 144 L6 88 L14 32 Z" fill="url(#gPs)"/>
+    <path d="M54 14 L91 35 L99 89 L91 142 L54 160 L17 142 L9 89 L17 35 Z" fill="none" stroke="#C4A464" stroke-width="0.5" opacity="0.4"/>
+    <g transform="translate(54,95)">
+      <rect x="-36" y="4" width="72" height="14" rx="2" fill="url(#gP2)"/>
+      <path d="M-36 4 L-27 -14 Q-16 -28 0 -30 Q14 -30 24 -18 L36 4 Z" fill="url(#gP2)"/>
+      <path d="M-23 3 L-16 -13 Q-7 -23 0 -24 L9 -24 L9 3 Z" fill="#07070D" opacity="0.8"/>
+      <path d="M11 3 L11 -20 Q19 -20 24 -13 L24 3 Z" fill="#07070D" opacity="0.65"/>
+      <line x1="9" y1="3" x2="9" y2="18" stroke="#07070D" stroke-width="0.9" opacity="0.6"/>
+      <rect x="30" y="7" width="7" height="5" rx="1" fill="#9E7E44"/>
+      <rect x="31" y="5" width="5" height="3" rx="1" fill="#E8D090" opacity="0.9"/>
+      <rect x="-37" y="7" width="5" height="5" rx="1" fill="#9E7E44"/>
+      <rect x="-36" y="5" width="4" height="3" rx="1" fill="#C4A464" opacity="0.8"/>
+      <circle cx="24" cy="20" r="8" fill="#0D0D18" stroke="url(#gP1)" stroke-width="1.2"/>
+      <circle cx="24" cy="20" r="4" fill="#07070D" stroke="#9E7E44" stroke-width="0.6"/>
+      <circle cx="24" cy="20" r="1.8" fill="#C4A464"/>
+      <line x1="24" y1="15" x2="24" y2="25" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="19" y1="20" x2="29" y2="20" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="20.5" y1="16.5" x2="27.5" y2="23.5" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="27.5" y1="16.5" x2="20.5" y2="23.5" stroke="#9E7E44" stroke-width="0.6"/>
+      <circle cx="-24" cy="20" r="8" fill="#0D0D18" stroke="url(#gP1)" stroke-width="1.2"/>
+      <circle cx="-24" cy="20" r="4" fill="#07070D" stroke="#9E7E44" stroke-width="0.6"/>
+      <circle cx="-24" cy="20" r="1.8" fill="#C4A464"/>
+      <line x1="-24" y1="15" x2="-24" y2="25" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="-29" y1="20" x2="-19" y2="20" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="-27.5" y1="16.5" x2="-20.5" y2="23.5" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="-20.5" y1="16.5" x2="-27.5" y2="23.5" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="-40" y1="29" x2="40" y2="29" stroke="#C4A464" stroke-width="0.4" opacity="0.25"/>
+    </g>
+    <text x="54" y="42" text-anchor="middle" font-family="Cormorant,Georgia,serif" font-size="14" font-weight="300" font-style="italic" fill="#C4A464" letter-spacing="0.15em" opacity="0.7">C</text>
+    <text x="54" y="162" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="5.5" font-weight="200" fill="#9E7E44" letter-spacing="0.4em">2024</text>
+  </svg>
+  <span style="font-family:var(--serif);font-size:38px;font-weight:300;letter-spacing:.36em;text-transform:uppercase;color:var(--white);">Car<em style="font-style:italic;color:var(--gold);font-weight:400;">a</em>vana</span>
+</div>
   <div class="pre-sub">The Intelligent Way to Own</div>
   <div class="pre-track"><div class="pre-fill" id="pf"></div></div>
   <div class="pre-pct" id="pp">0%</div>
@@ -569,7 +609,47 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="n-logo">Car<em>a</em>vana</a>
+  <a href="#" class="n-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+  <svg width="32" height="38" viewBox="0 0 108 180" xmlns="http://www.w3.org/2000/svg" aria-label="Caravana emblem">
+    <defs>
+      <linearGradient id="gN1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8CC80"/><stop offset="50%" stop-color="#C4A464"/><stop offset="100%" stop-color="#8A6830"/></linearGradient>
+      <linearGradient id="gN2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#DEC080"/><stop offset="100%" stop-color="#9E7E44"/></linearGradient>
+      <linearGradient id="gNs" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#111118"/><stop offset="100%" stop-color="#07070D"/></linearGradient>
+    </defs>
+    <path d="M54 2 L100 26 L108 86 L100 148 L54 174 L8 148 L0 86 L8 26 Z" fill="url(#gN1)"/>
+    <path d="M54 10 L94 32 L102 88 L94 144 L54 165 L14 144 L6 88 L14 32 Z" fill="url(#gNs)"/>
+    <path d="M54 14 L91 35 L99 89 L91 142 L54 160 L17 142 L9 89 L17 35 Z" fill="none" stroke="#C4A464" stroke-width="0.5" opacity="0.4"/>
+    <g transform="translate(54,95)">
+      <rect x="-36" y="4" width="72" height="14" rx="2" fill="url(#gN2)"/>
+      <path d="M-36 4 L-27 -14 Q-16 -28 0 -30 Q14 -30 24 -18 L36 4 Z" fill="url(#gN2)"/>
+      <path d="M-23 3 L-16 -13 Q-7 -23 0 -24 L9 -24 L9 3 Z" fill="#07070D" opacity="0.8"/>
+      <path d="M11 3 L11 -20 Q19 -20 24 -13 L24 3 Z" fill="#07070D" opacity="0.65"/>
+      <line x1="9" y1="3" x2="9" y2="18" stroke="#07070D" stroke-width="0.9" opacity="0.6"/>
+      <rect x="30" y="7" width="7" height="5" rx="1" fill="#9E7E44"/>
+      <rect x="31" y="5" width="5" height="3" rx="1" fill="#E8D090" opacity="0.9"/>
+      <rect x="-37" y="7" width="5" height="5" rx="1" fill="#9E7E44"/>
+      <rect x="-36" y="5" width="4" height="3" rx="1" fill="#C4A464" opacity="0.8"/>
+      <circle cx="24" cy="20" r="8" fill="#0D0D18" stroke="url(#gN1)" stroke-width="1.2"/>
+      <circle cx="24" cy="20" r="4" fill="#07070D" stroke="#9E7E44" stroke-width="0.6"/>
+      <circle cx="24" cy="20" r="1.8" fill="#C4A464"/>
+      <line x1="24" y1="15" x2="24" y2="25" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="19" y1="20" x2="29" y2="20" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="20.5" y1="16.5" x2="27.5" y2="23.5" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="27.5" y1="16.5" x2="20.5" y2="23.5" stroke="#9E7E44" stroke-width="0.6"/>
+      <circle cx="-24" cy="20" r="8" fill="#0D0D18" stroke="url(#gN1)" stroke-width="1.2"/>
+      <circle cx="-24" cy="20" r="4" fill="#07070D" stroke="#9E7E44" stroke-width="0.6"/>
+      <circle cx="-24" cy="20" r="1.8" fill="#C4A464"/>
+      <line x1="-24" y1="15" x2="-24" y2="25" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="-29" y1="20" x2="-19" y2="20" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="-27.5" y1="16.5" x2="-20.5" y2="23.5" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="-20.5" y1="16.5" x2="-27.5" y2="23.5" stroke="#9E7E44" stroke-width="0.6"/>
+      <line x1="-40" y1="29" x2="40" y2="29" stroke="#C4A464" stroke-width="0.4" opacity="0.25"/>
+    </g>
+    <text x="54" y="42" text-anchor="middle" font-family="Cormorant,Georgia,serif" font-size="14" font-weight="300" font-style="italic" fill="#C4A464" letter-spacing="0.15em" opacity="0.7">C</text>
+    <text x="54" y="162" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="5.5" font-weight="200" fill="#9E7E44" letter-spacing="0.4em">2024</text>
+  </svg>
+  <span style="font-family:var(--serif);font-size:18px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--white);">Car<em style="font-style:italic;color:var(--gold);font-weight:400;">a</em>vana</span>
+</a>
   <ul class="n-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#cinema">In Motion</a></li>
@@ -949,7 +1029,28 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
 <footer>
   <div class="container">
     <div class="ft-top">
-      <div class="ft-brand"><a href="#" class="ft-logo">Car<em>a</em>vana</a><p>India's most transparent car ownership platform. We succeed only when you do. Built for India's 200M+ car owners.</p><div class="ft-soc"><a href="https://linkedin.com" target="_blank" rel="noopener" class="fs-a">in</a><a href="https://twitter.com" target="_blank" rel="noopener" class="fs-a">tw</a><a href="https://youtube.com" target="_blank" rel="noopener" class="fs-a">yt</a><a href="https://instagram.com" target="_blank" rel="noopener" class="fs-a">ig</a></div></div>
+      <div class="ft-brand"><a href="#" class="ft-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:20px;">
+  <svg width="26" height="31" viewBox="0 0 108 180" xmlns="http://www.w3.org/2000/svg" aria-label="Caravana emblem">
+    <defs>
+      <linearGradient id="gF1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8CC80"/><stop offset="50%" stop-color="#C4A464"/><stop offset="100%" stop-color="#8A6830"/></linearGradient>
+      <linearGradient id="gF2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#DEC080"/><stop offset="100%" stop-color="#9E7E44"/></linearGradient>
+      <linearGradient id="gFs" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#111118"/><stop offset="100%" stop-color="#07070D"/></linearGradient>
+    </defs>
+    <path d="M54 2 L100 26 L108 86 L100 148 L54 174 L8 148 L0 86 L8 26 Z" fill="url(#gF1)"/>
+    <path d="M54 10 L94 32 L102 88 L94 144 L54 165 L14 144 L6 88 L14 32 Z" fill="url(#gFs)"/>
+    <g transform="translate(54,95)">
+      <rect x="-36" y="4" width="72" height="14" rx="2" fill="url(#gF2)"/>
+      <path d="M-36 4 L-27 -14 Q-16 -28 0 -30 Q14 -30 24 -18 L36 4 Z" fill="url(#gF2)"/>
+      <path d="M-23 3 L-16 -13 Q-7 -23 0 -24 L9 -24 L9 3 Z" fill="#07070D" opacity="0.8"/>
+      <path d="M11 3 L11 -20 Q19 -20 24 -13 L24 3 Z" fill="#07070D" opacity="0.65"/>
+      <circle cx="24" cy="20" r="8" fill="#0D0D18" stroke="url(#gF1)" stroke-width="1.2"/>
+      <circle cx="24" cy="20" r="1.8" fill="#C4A464"/>
+      <circle cx="-24" cy="20" r="8" fill="#0D0D18" stroke="url(#gF1)" stroke-width="1.2"/>
+      <circle cx="-24" cy="20" r="1.8" fill="#C4A464"/>
+    </g>
+  </svg>
+  <span style="font-family:var(--serif);font-size:22px;font-weight:300;letter-spacing:.32em;text-transform:uppercase;color:var(--white);">Car<em style="font-style:italic;color:var(--gold);font-weight:400;">a</em>vana</span>
+</a><p>India's most transparent car ownership platform. We succeed only when you do. Built for India's 200M+ car owners.</p><div class="ft-soc"><a href="https://linkedin.com" target="_blank" rel="noopener" class="fs-a">in</a><a href="https://twitter.com" target="_blank" rel="noopener" class="fs-a">tw</a><a href="https://youtube.com" target="_blank" rel="noopener" class="fs-a">yt</a><a href="https://instagram.com" target="_blank" rel="noopener" class="fs-a">ig</a></div></div>
       <div class="ft-col"><h4>Services</h4><ul><li><a href="#services">Car Buying</a></li><li><a href="#services">Insurance</a></li><li><a href="#services">Repairs</a></li><li><a href="#compare">Compare</a></li><li><a href="#services">Fleet OS</a></li></ul></div>
       <div class="ft-col"><h4>Company</h4><ul><li><a href="#cta">About</a></li><li><a href="#cta">Partners</a></li><li><a href="#cta">Careers</a></li><li><a href="#cta">Press</a></li><li><a href="#cta">Blog</a></li></ul></div>
       <div class="ft-col"><h4>Legal</h4><ul><li><a href="#cta">Privacy Policy</a></li><li><a href="#cta">Terms of Use</a></li><li><a href="#cta">Security</a></li><li><a href="#faq">Help Centre</a></li></ul></div>
