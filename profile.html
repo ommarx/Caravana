@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>My Profile — Caravana</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23040407'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' fill='%23C4A464' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Instrument+Sans:wght@300;400;500&family=Barlow+Condensed:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut, updateProfile, updateEmail, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBbr9iQjoQqiMO4jDw0gwh5nI6_fpKJKK4",
+    authDomain: "caravana-789bb.firebaseapp.com",
+    projectId: "caravana-789bb",
+    storageBucket: "caravana-789bb.firebasestorage.app",
+    messagingSenderId: "473315709820",
+    appId: "1:473315709820:web:45671d1e3809b90de8caf9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const $= id => document.getElementById(id);
+
+  const toast = (msg, ok=true) => {
+    const t = $('toast');
+    t.textContent = msg;
+    t.style.background = ok ? 'rgba(29,158,117,.15)' : 'rgba(224,112,112,.1)';
+    t.style.borderColor = ok ? 'rgba(29,158,117,.3)' : 'rgba(224,112,112,.3)';
+    t.style.color = ok ? '#1D9E75' : '#E07070';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  };
+
+  onAuthStateChanged(auth, user => {
+    if (!user) { window.location.href = 'login.html'; return; }
+    populateProfile(user);
+    document.getElementById('profilePage').style.opacity = '1';
+  });
+
+  function populateProfile(user) {
+    const name = user.displayName || '';
+    const email = user.email || '';
+    const photo = user.photoURL;
+    const initials = name ? name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2) : (email ? email[0].toUpperCase() : 'U');
+    const provider = user.providerData[0]?.providerId || 'email';
+
+    $('avatarInitials').textContent = initials;
+    if (photo) {
+      $('avatarImg').src = photo;
+      $('avatarImg').style.display = 'block';
+      $('avatarInitials').style.display = 'none';
+    }
+    $('profileName').textContent = name || 'No name set';
+    $('profileEmail').textContent = email;
+    $('profileProvider').textContent = provider === 'google.com' ? 'Google account' : provider === 'phone' ? 'Phone number' : 'Email & password';
+    $('profileJoined').textContent = user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'}) : '—';
+    $('editName').value = name;
+    $('editEmail').value = email;
+    $('profileVerified').textContent = user.emailVerified ? '✓ Verified' : '○ Not verified';
+    $('profileVerified').style.color = user.emailVerified ? '#1D9E75' : '#BA7517';
+    window._currentUser = user;
+    window._provider = provider;
+    if (provider !== 'password') {
+      $('passwordSection').style.display = 'none';
+      $('emailSection').style.display = 'none';
+    }
+  }
+
+  window.handleSignOut = async () => {
+    if (!confirm('Sign out of Caravana?')) return;
+    await signOut(auth);
+    window.location.href = 'login.html';
+  };
+
+  window.saveProfile = async () => {
+    const name = $('editName').value.trim();
+    if (!name) { toast('Please enter your name.', false); return; }
+    const btn = $('saveProfileBtn');
+    btn.textContent = 'Saving…'; btn.disabled = true;
+    try {
+      await updateProfile(window._currentUser, { displayName: name });
+      $('profileName').textContent = name;
+      toast('Profile updated successfully.');
+    } catch(e) { toast('Failed to update profile.', false); }
+    btn.textContent = 'Save changes'; btn.disabled = false;
+  };
+
+  window.saveEmail = async () => {
+    const email = $('editEmail').value.trim();
+    const pass = $('reAuthPass').value;
+    if (!email) { toast('Enter a valid email.', false); return; }
+    if (!pass) { toast('Enter your current password to confirm.', false); return; }
+    const btn = $('saveEmailBtn');
+    btn.textContent = 'Updating…'; btn.disabled = true;
+    try {
+      const cred = EmailAuthProvider.credential(window._currentUser.email, pass);
+      await reauthenticateWithCredential(window._currentUser, cred);
+      await updateEmail(window._currentUser, email);
+      $('profileEmail').textContent = email;
+      $('reAuthPass').value = '';
+      toast('Email updated successfully.');
+    } catch(e) {
+      toast(e.code === 'auth/wrong-password' ? 'Incorrect password.' : 'Failed to update email.', false);
+    }
+    btn.textContent = 'Update email'; btn.disabled = false;
+  };
+
+  window.savePassword = async () => {
+    const curr = $('currPass').value;
+    const next = $('newPass').value;
+    const conf = $('confPass').value;
+    if (!curr || !next) { toast('Fill in all password fields.', false); return; }
+    if (next.length < 8) { toast('New password must be 8+ characters.', false); return; }
+    if (next !== conf) { toast('Passwords do not match.', false); return; }
+    const btn = $('savePassBtn');
+    btn.textContent = 'Updating…'; btn.disabled = true;
+    try {
+      const cred = EmailAuthProvider.credential(window._currentUser.email, curr);
+      await reauthenticateWithCredential(window._currentUser, cred);
+      await updatePassword(window._currentUser, next);
+      $('currPass').value = ''; $('newPass').value = ''; $('confPass').value = '';
+      toast('Password changed successfully.');
+    } catch(e) {
+      toast(e.code === 'auth/wrong-password' ? 'Current password is incorrect.' : 'Failed to update password.', false);
+    }
+    btn.textContent = 'Change password'; btn.disabled = false;
+  };
+</script>
+<style>
+:root{--void:#040407;--abyss:#07070D;--carbon:#11111C;--iron:#181826;--rim:#222234;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.1);--muted:#424258;--body:#8A8AA8;--silver:#B4B4CC;--pearl:#D8D8E8;--cream:#EEEAE2;--white:#F6F4F0;--gold:#C4A464;--gold2:#DEC080;--gold3:#9E7E44;--goldGlow:rgba(196,164,100,.12);--serif:'Cormorant','Georgia',serif;--sans:'Instrument Sans',system-ui,sans-serif;--cond:'Barlow Condensed',sans-serif;--t1:cubic-bezier(.16,1,.3,1);--t2:cubic-bezier(.4,0,.2,1);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;}
+body{background:var(--void);color:var(--body);font-family:var(--sans);font-weight:300;cursor:none;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");opacity:.5;}
+a{text-decoration:none;color:inherit;cursor:none;}
+button{cursor:none;border:none;background:none;font-family:inherit;}
+input{font-family:inherit;}
+::selection{background:var(--gold);color:var(--void);}
+#cdot{position:fixed;width:6px;height:6px;background:var(--gold);border-radius:50%;z-index:7999;pointer-events:none;transform:translate(-50%,-50%);transition:opacity .3s;}
+#cring{position:fixed;width:38px;height:38px;border:1px solid rgba(196,164,100,.4);border-radius:50%;z-index:7998;pointer-events:none;transform:translate(-50%,-50%);transition:width .45s var(--t1),height .45s var(--t1),border-color .3s;}
+body.ch #cring{width:60px;height:60px;border-color:var(--gold);background:var(--goldGlow);}
+@keyframes pFade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.bg-orb{position:fixed;border-radius:50%;pointer-events:none;filter:blur(120px);animation:drift 18s ease-in-out infinite alternate;}
+.bg-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(196,164,100,.04) 0%,transparent 70%);top:-150px;right:-80px;}
+.bg-orb-2{width:350px;height:350px;background:radial-gradient(circle,rgba(196,164,100,.025) 0%,transparent 70%);bottom:-80px;left:-80px;animation-delay:-9s;}
+@keyframes drift{0%{transform:translate(0,0);}100%{transform:translate(30px,20px);}}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;border-bottom:1px solid var(--border);background:rgba(4,4,7,.85);backdrop-filter:blur(12px);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-text{font-family:var(--serif);font-size:17px;font-weight:300;letter-spacing:.32em;text-transform:uppercase;color:var(--white);transition:opacity .3s;}
+.logo-text em{font-style:italic;color:var(--gold);font-weight:400;}
+.nav-logo:hover .logo-text{opacity:.7;}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-link{font-family:var(--cond);font-size:10px;font-weight:200;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);transition:color .3s;}
+.nav-link:hover{color:var(--gold);}
+.signout-btn{font-family:var(--cond);font-size:10px;font-weight:200;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border2);padding:8px 20px;transition:color .3s,border-color .3s;}
+.signout-btn:hover{color:var(--gold);border-color:var(--gold3);}
+
+/* PAGE */
+#profilePage{max-width:860px;margin:0 auto;padding:110px 24px 80px;opacity:0;transition:opacity .6s var(--t2);}
+
+/* HERO CARD */
+.hero-card{display:flex;align-items:center;gap:32px;padding:40px;border:1px solid var(--border);background:var(--carbon);margin-bottom:40px;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold3),transparent);}
+.avatar{width:80px;height:80px;border-radius:50%;border:1px solid var(--gold3);background:var(--iron);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;overflow:hidden;}
+.avatar img{width:100%;height:100%;object-fit:cover;display:none;}
+.avatar-initials{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--gold);font-style:italic;}
+.hero-info{flex:1;}
+.hero-name{font-family:var(--serif);font-size:clamp(26px,3.5vw,38px);font-weight:300;color:var(--white);margin-bottom:6px;}
+.hero-name em{font-style:italic;color:var(--gold);}
+.hero-meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;}
+.meta-item{font-family:var(--cond);font-size:9px;font-weight:200;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.meta-dot{width:3px;height:3px;border-radius:50%;background:var(--gold3);}
+.member-badge{font-family:var(--cond);font-size:9px;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(196,164,100,.25);padding:6px 16px;align-self:flex-start;white-space:nowrap;}
+
+/* SECTIONS */
+.section-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.section-card{border:1px solid var(--border);background:var(--carbon);padding:32px;position:relative;}
+.section-card.full{grid-column:1/-1;}
+.section-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(196,164,100,.2),transparent);}
+.section-label{font-family:var(--cond);font-size:9px;font-weight:200;letter-spacing:.48em;text-transform:uppercase;color:var(--gold3);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.f-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.f-label{font-family:var(--cond);font-size:9px;font-weight:200;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);}
+.f-in{background:var(--iron);border:1px solid var(--border);color:var(--cream);font-family:var(--sans);font-size:14px;font-weight:300;padding:13px 16px;width:100%;outline:none;transition:border-color .35s,box-shadow .35s;-webkit-appearance:none;}
+.f-in::placeholder{color:var(--muted);}
+.f-in:focus{border-color:var(--gold3);box-shadow:0 0 0 1px rgba(196,164,100,.08);}
+.f-in-wrap{position:relative;}
+.f-in-wrap .f-in{padding-right:52px;}
+.show-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:var(--cond);font-size:9px;font-weight:200;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);transition:color .3s;}
+.show-btn:hover{color:var(--gold);}
+.f-hint{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5;}
+.btn-save{background:transparent;border:1px solid var(--gold3);color:var(--gold);font-family:var(--cond);font-size:10px;font-weight:300;letter-spacing:.28em;text-transform:uppercase;padding:12px 28px;transition:background .3s,color .3s,box-shadow .3s;margin-top:8px;}
+.btn-save:hover{background:var(--goldGlow);box-shadow:0 4px 20px rgba(196,164,100,.15);}
+.btn-save:disabled{opacity:.4;pointer-events:none;}
+.stat-row{display:flex;flex-direction:column;gap:14px;}
+.stat-item{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.stat-item:last-child{border-bottom:none;padding-bottom:0;}
+.stat-key{font-family:var(--cond);font-size:9px;font-weight:200;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);}
+.stat-val{font-size:13px;color:var(--silver);}
+
+/* DANGER */
+.danger-card{border:1px solid rgba(224,112,112,.15);background:rgba(224,112,112,.04);padding:28px 32px;margin-top:20px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.danger-txt h4{font-family:var(--cond);font-size:11px;font-weight:300;letter-spacing:.24em;text-transform:uppercase;color:#E07070;margin-bottom:4px;}
+.danger-txt p{font-size:12px;color:var(--muted);}
+.btn-danger{font-family:var(--cond);font-size:10px;font-weight:200;letter-spacing:.28em;text-transform:uppercase;color:#E07070;border:1px solid rgba(224,112,112,.3);padding:10px 24px;transition:background .3s,box-shadow .3s;white-space:nowrap;}
+.btn-danger:hover{background:rgba(224,112,112,.08);box-shadow:0 4px 20px rgba(224,112,112,.1);}
+
+/* TOAST */
+#toast{position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(20px);font-family:var(--cond);font-size:10px;font-weight:200;letter-spacing:.28em;text-transform:uppercase;padding:12px 28px;border:1px solid;border-radius:2px;opacity:0;transition:opacity .4s,transform .4s var(--t1);pointer-events:none;z-index:8000;white-space:nowrap;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:680px){.section-grid{grid-template-columns:1fr;}.section-card.full{grid-column:1;}.hero-card{flex-direction:column;align-items:flex-start;gap:20px;}.nav{padding:0 24px;}.nav-right .nav-link{display:none;}#profilePage{padding:100px 16px 60px;}}
+</style>
+</head>
+<body>
+<div id="cdot"></div>
+<div id="cring"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div id="toast"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <svg width="22" height="26" viewBox="0 0 108 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="nl1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8CC80"/><stop offset="50%" stop-color="#C4A464"/><stop offset="100%" stop-color="#8A6830"/></linearGradient>
+        <linearGradient id="nl2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#DEC080"/><stop offset="100%" stop-color="#9E7E44"/></linearGradient>
+        <linearGradient id="nls" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#111118"/><stop offset="100%" stop-color="#07070D"/></linearGradient>
+      </defs>
+      <path d="M54 2 L100 26 L108 86 L100 148 L54 174 L8 148 L0 86 L8 26 Z" fill="url(#nl1)"/>
+      <path d="M54 10 L94 32 L102 88 L94 144 L54 165 L14 144 L6 88 L14 32 Z" fill="url(#nls)"/>
+      <g transform="translate(54,95)">
+        <rect x="-36" y="4" width="72" height="14" rx="2" fill="url(#nl2)"/>
+        <path d="M-36 4 L-27 -14 Q-16 -28 0 -30 Q14 -30 24 -18 L36 4 Z" fill="url(#nl2)"/>
+        <circle cx="24" cy="20" r="8" fill="#0D0D18" stroke="url(#nl1)" stroke-width="1.2"/>
+        <circle cx="24" cy="20" r="1.8" fill="#C4A464"/>
+        <circle cx="-24" cy="20" r="8" fill="#0D0D18" stroke="url(#nl1)" stroke-width="1.2"/>
+        <circle cx="-24" cy="20" r="1.8" fill="#C4A464"/>
+      </g>
+    </svg>
+    <span class="logo-text">Car<em>a</em>vana</span>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">Home</a>
+    <button class="signout-btn" onclick="handleSignOut()">Sign out</button>
+  </div>
+</nav>
+
+<!-- PROFILE PAGE -->
+<div id="profilePage">
+
+  <!-- HERO -->
+  <div class="hero-card">
+    <div class="avatar">
+      <img id="avatarImg" src="" alt="Profile photo"/>
+      <span class="avatar-initials" id="avatarInitials">—</span>
+    </div>
+    <div class="hero-info">
+      <div class="hero-name" id="profileName">Loading<em>…</em></div>
+      <div class="hero-meta">
+        <div class="meta-item"><div class="meta-dot"></div><span id="profileEmail">—</span></div>
+        <div class="meta-item"><div class="meta-dot"></div><span id="profileProvider">—</span></div>
+        <div class="meta-item"><div class="meta-dot"></div><span id="profileVerified">—</span></div>
+      </div>
+    </div>
+    <div class="member-badge">Caravana Member</div>
+  </div>
+
+  <!-- SECTIONS -->
+  <div class="section-grid">
+
+    <!-- EDIT PROFILE -->
+    <div class="section-card">
+      <div class="section-label">Profile info</div>
+      <div class="f-group">
+        <div class="f-label">Display name</div>
+        <input class="f-in" id="editName" type="text" placeholder="Your name"/>
+      </div>
+      <button class="btn-save" id="saveProfileBtn" onclick="saveProfile()">Save changes</button>
+    </div>
+
+    <!-- ACCOUNT INFO -->
+    <div class="section-card">
+      <div class="section-label">Account details</div>
+      <div class="stat-row">
+        <div class="stat-item">
+          <span class="stat-key">Member since</span>
+          <span class="stat-val" id="profileJoined">—</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-key">Sign-in method</span>
+          <span class="stat-val" id="profileProviderFull">—</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-key">Account status</span>
+          <span class="stat-val" style="color:#1D9E75;">Active</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-key">Plan</span>
+          <span class="stat-val" style="color:var(--gold);">Caravana Free</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANGE EMAIL -->
+    <div class="section-card" id="emailSection">
+      <div class="section-label">Email address</div>
+      <div class="f-group">
+        <div class="f-label">New email</div>
+        <input class="f-in" id="editEmail" type="email" placeholder="new@example.com"/>
+      </div>
+      <div class="f-group">
+        <div class="f-label">Current password (to confirm)</div>
+        <div class="f-in-wrap">
+          <input class="f-in" id="reAuthPass" type="password" placeholder="••••••••"/>
+          <button class="show-btn" onclick="togglePass('reAuthPass',this)">show</button>
+        </div>
+      </div>
+      <button class="btn-save" id="saveEmailBtn" onclick="saveEmail()">Update email</button>
+    </div>
+
+    <!-- CHANGE PASSWORD -->
+    <div class="section-card" id="passwordSection">
+      <div class="section-label">Change password</div>
+      <div class="f-group">
+        <div class="f-label">Current password</div>
+        <div class="f-in-wrap">
+          <input class="f-in" id="currPass" type="password" placeholder="••••••••"/>
+          <button class="show-btn" onclick="togglePass('currPass',this)">show</button>
+        </div>
+      </div>
+      <div class="f-group">
+        <div class="f-label">New password</div>
+        <div class="f-in-wrap">
+          <input class="f-in" id="newPass" type="password" placeholder="Min. 8 characters"/>
+          <button class="show-btn" onclick="togglePass('newPass',this)">show</button>
+        </div>
+      </div>
+      <div class="f-group">
+        <div class="f-label">Confirm new password</div>
+        <input class="f-in" id="confPass" type="password" placeholder="Repeat new password"/>
+      </div>
+      <button class="btn-save" id="savePassBtn" onclick="savePassword()">Change password</button>
+    </div>
+
+  </div>
+
+  <!-- DANGER ZONE -->
+  <div class="danger-card">
+    <div class="danger-txt">
+      <h4>Sign out everywhere</h4>
+      <p>Remove your session from this device immediately.</p>
+    </div>
+    <button class="btn-danger" onclick="handleSignOut()">Sign out</button>
+  </div>
+
+</div>
+
+<script>
+const cd=document.getElementById('cdot'),cr=document.getElementById('cring');
+let mx=0,my=0,bx=0,by=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
+document.addEventListener('mouseleave',()=>{cd.style.opacity='0';cr.style.opacity='0';});
+document.addEventListener('mouseenter',()=>{cd.style.opacity='1';cr.style.opacity='1';});
+document.querySelectorAll('a,button,input').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+(function ring(){bx+=(mx-bx)*.12;by+=(my-by)*.12;cr.style.left=bx+'px';cr.style.top=by+'px';requestAnimationFrame(ring);})();
+window.togglePass=(id,btn)=>{const i=document.getElementById(id);i.type=i.type==='password'?'text':'password';btn.textContent=i.type==='password'?'show':'hide';};
+document.getElementById('profileProviderFull').textContent='—';
+onAuthStateChanged && void 0;
+</script>
+</body>
+</html>
