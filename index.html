@@ -15,27 +15,19 @@
 <meta name="twitter:description" content="India's most transparent car ownership platform. Buy, insure, repair and compare — zero bias, complete transparency."/>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23040407'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' fill='%23C4A464' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Instrument+Sans:wght@300;400;500;600&family=Barlow+Condensed:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Instrument+Sans:wght@300;400;500&family=Barlow+Condensed:wght@200;300;400;500&display=swap" rel="stylesheet"/>
 <style>
-/* ══════════════════════════════════════════════════
-   CARAVANA  ·  ELITE  ·  2025
-   Fonts: Cormorant (display) + Instrument Sans (body)
-   Palette: Obsidian · Platinum · Champagne
-══════════════════════════════════════════════════ */
 :root {
   --void:     #040407;
   --abyss:    #07070D;
-  --deep:     #0B0B14;
   --carbon:   #11111C;
   --iron:     #181826;
   --rim:      #222234;
   --border:   rgba(255,255,255,.06);
   --border2:  rgba(255,255,255,.035);
   --muted:    #424258;
-  --dim:      #6868888;
   --body:     #8A8AA8;
   --silver:   #B4B4CC;
-  --pearl:    #D8D8E8;
   --cream:    #EEEAE2;
   --white:    #F6F4F0;
   --gold:     #C4A464;
@@ -47,7 +39,6 @@
   --cond:  'Barlow Condensed', sans-serif;
   --t1: cubic-bezier(.16,1,.3,1);
   --t2: cubic-bezier(.4,0,.2,1);
-  --t3: cubic-bezier(.87,0,.13,1);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
@@ -204,10 +195,6 @@ body.cl #cring { width: 88px; height: 88px; border-color: var(--gold2); backgrou
     linear-gradient(to right, rgba(4,4,7,.88) 0%, rgba(4,4,7,.6) 45%, rgba(4,4,7,.3) 100%),
     linear-gradient(to top, rgba(4,4,7,.95) 0%, rgba(4,4,7,.4) 35%, transparent 65%);
 }
-/* Color grade */
-.hero-grade { position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(196,164,100,.04) 0%, transparent 70%);
-}
 /* Content */
 .hero-content { position: relative; z-index: 10; padding: 0 60px 88px; display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: flex-end; }
 .h-eyebrow { opacity: 0; animation: hUp .7s .8s var(--t1) forwards; margin-bottom: 32px; }
@@ -310,26 +297,18 @@ body.cl #cring { width: 88px; height: 88px; border-color: var(--gold2); backgrou
 .sc:hover .sc-lnk { gap: 18px; color: var(--gold2); }
 
 /* ──────────────────────────────────
-   VIDEO SHOWCASE
+   IN MOTION STRIP
 ────────────────────────────────── */
-.cinema { padding: 0; background: var(--void); }
-.cinema-header { padding: 100px 60px 60px; display: flex; justify-content: space-between; align-items: flex-end; }
+.cinema { padding: 0 0 100px; background: var(--void); }
+.cinema-header { padding: 100px 0 60px; display: flex; justify-content: space-between; align-items: flex-end; }
 .cinema-header p { font-size: 15px; line-height: 1.88; color: var(--body); max-width: 360px; }
-/* Three video cards side by side */
-.cinema-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 2px; }
-.cv-card { position: relative; overflow: hidden; background: var(--carbon); cursor: none; }
-.cv-card:hover { z-index: 2; }
-/* 16:9 ratio */
-.cv-card::before { content: ''; display: block; padding-top: 62%; }
-.cv-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--t2); }
-.cv-card:hover .cv-video { transform: scale(1.04); }
-.cv-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(4,4,7,.88) 0%, rgba(4,4,7,.3) 50%, transparent 100%); }
-.cv-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 36px; }
-.cv-label { font-family: var(--cond); font-size: 9px; font-weight: 200; letter-spacing: .45em; text-transform: uppercase; color: var(--gold3); margin-bottom: 8px; }
-.cv-title { font-family: var(--serif); font-size: clamp(18px,2vw,26px); font-weight: 300; color: var(--white); }
-/* Play icon */
-.cv-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); width: 56px; height: 56px; border: 1px solid rgba(196,164,100,.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 20px; transition: transform .4s var(--t1), background .3s; }
-.cv-card:hover .cv-play { transform: translate(-50%,-50%) scale(1); background: rgba(196,164,100,.1); }
+.cinema-quotes { display: grid; grid-template-columns: repeat(4,1fr) repeat(3,.04fr); align-items: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.cq { padding: 72px 60px; }
+.cq-n { font-family: var(--serif); font-size: clamp(52px,5.5vw,80px); font-weight: 300; color: var(--white); line-height: 1; letter-spacing: -.02em; }
+.cq-n em { font-style: italic; color: var(--gold); font-size: .75em; }
+.cq-l { font-family: var(--cond); font-size: 10px; font-weight: 200; letter-spacing: .42em; text-transform: uppercase; color: var(--muted); margin-top: 12px; line-height: 1.6; }
+.cq-div { height: 100%; width: 1px; background: var(--border); }
+@media(max-width:1080px){ .cinema-header{padding:60px 0 40px;flex-direction:column;align-items:flex-start;gap:20px;} .cinema-quotes{grid-template-columns:1fr 1fr;} .cq-div{display:none;} .cq{border-bottom:1px solid var(--border);} }
 
 /* ──────────────────────────────────
    PROCESS
@@ -684,7 +663,6 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
   </div>
   <noscript><style>#pre{display:none!important}</style></noscript>
   <div class="hero-overlay"></div>
-  <div class="hero-grade"></div>
 
   <div class="hero-content">
     <div>
@@ -847,52 +825,23 @@ footer { background: var(--void); border-top: 1px solid var(--border); padding: 
   </div>
 </section>
 
-<!-- VIDEO SHOWCASE -->
+<!-- VISUAL BREAK -->
 <section class="cinema" id="cinema">
-  <div class="cinema-header">
+  <div class="cinema-header container">
     <div>
       <div class="label" data-r="fade" style="margin-bottom:22px">In Motion</div>
       <h2 class="h2" data-r="up" data-d="1">Performance<br><em>meets precision.</em></h2>
     </div>
     <p data-r="right" data-d="2">Every car we help you buy, insure, or service is chosen with the same discipline that goes into engineering it.</p>
   </div>
-  <div class="cinema-grid">
-    <!-- Video 1 -->
-    <div class="cv-card" data-r="fade">
-      <video class="cv-video" autoplay muted loop playsinline>
-        <source src="https://videos.pexels.com/video-files/3209828/3209828-hd_1920_1080_24fps.mp4" type="video/mp4"/>
-      </video>
-      <div class="cv-overlay"></div>
-      <div class="cv-play">▶</div>
-      <div class="cv-info">
-        <div class="cv-label">Car Buying</div>
-        <div class="cv-title">Find your perfect match</div>
-      </div>
-    </div>
-    <!-- Video 2 -->
-    <div class="cv-card" data-r="fade" data-d="1">
-      <video class="cv-video" autoplay muted loop playsinline>
-        <source src="https://videos.pexels.com/video-files/4056723/4056723-hd_1280_720_25fps.mp4" type="video/mp4"/>
-      </video>
-      <div class="cv-overlay"></div>
-      <div class="cv-play">▶</div>
-      <div class="cv-info">
-        <div class="cv-label">Insurance</div>
-        <div class="cv-title">Protected every mile</div>
-      </div>
-    </div>
-    <!-- Video 3 -->
-    <div class="cv-card" data-r="fade" data-d="2">
-      <video class="cv-video" autoplay muted loop playsinline>
-        <source src="https://videos.pexels.com/video-files/2961751/2961751-hd_1920_1080_30fps.mp4" type="video/mp4"/>
-      </video>
-      <div class="cv-overlay"></div>
-      <div class="cv-play">▶</div>
-      <div class="cv-info">
-        <div class="cv-label">Expert Service</div>
-        <div class="cv-title">Precision at every turn</div>
-      </div>
-    </div>
+  <div class="cinema-quotes">
+    <div class="cq" data-r="up"><div class="cq-n">500<em>+</em></div><div class="cq-l">Certified<br>Dealerships</div></div>
+    <div class="cq-div"></div>
+    <div class="cq" data-r="up" data-d="1"><div class="cq-n">20<em>+</em></div><div class="cq-l">Insurance<br>Providers</div></div>
+    <div class="cq-div"></div>
+    <div class="cq" data-r="up" data-d="2"><div class="cq-n">200<em>+</em></div><div class="cq-l">Verified<br>Workshops</div></div>
+    <div class="cq-div"></div>
+    <div class="cq" data-r="up" data-d="3"><div class="cq-n">6</div><div class="cq-l">Cities<br>Live Now</div></div>
   </div>
 </section>
 
@@ -1092,7 +1041,7 @@ document.querySelectorAll('a,button').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('cl'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('cl'));
 });
-document.querySelectorAll('.sc,.nb,.ps,.pc,.fi,.h-datum,.cv-card,.sl-slide').forEach(el=>{
+document.querySelectorAll('.sc,.nb,.ps,.pc,.fi,.cv-card,.sl-slide').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
 });
@@ -1144,8 +1093,6 @@ document.getElementById('slNext').addEventListener('click',()=>{clearInterval(au
 dots.forEach(d=>d.addEventListener('click',()=>{clearInterval(auto);goTo(+d.dataset.i);sa();}));
 function sa(){auto=setInterval(()=>goTo(cur+1),5500);}
 sa();
-const sObs=new IntersectionObserver(e=>{if(e[0].isIntersecting)goTo(0);},{threshold:.3});
-sObs.observe(document.querySelector('.sl-stage'));
 
 /* ── PRICING TOGGLE ── */
 const ptog=document.getElementById('ptog');let ann=true;
@@ -1194,3 +1141,4 @@ document.getElementById('fSubmit').addEventListener('click',()=>{
 </script>
 </body>
 </html>
+
